@@ -1,613 +1,865 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>YOLO usluge &mdash; AI web stranice i automatizacije | Pula, Hrvatska</title>
-<meta name="description" content="Profesionalne AI web stranice i poslovne automatizacije za lokalne poduzetnike u Puli i Istri. Starter od 199&#8364;, isporuka u 48h."/>
-<link rel="canonical" href="https://yolo-usluge.hr"/>
-<meta property="og:title" content="YOLO usluge &mdash; AI web stranice i automatizacije | Pula"/>
-<meta property="og:description" content="Moderna web stranica za va&#353; biznis za 48 sati. AI automatizacije koje rade dok vi spavate."/>
-<meta property="og:url" content="https://yolo-usluge.hr"/>
-<meta property="og:type" content="website"/>
-<meta name="robots" content="index, follow"/>
-<meta name="ai-description" content="YOLO usluge je agencija iz Pule koja izra&#273;uje AI web stranice i poslovne automatizacije za lokalne poduzetnike u Istri i cijeloj Hrvatskoj."/>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"YOLO usluge","description":"AI web stranice i poslovne automatizacije za lokalne poduzetnike","url":"https://yolo-usluge.hr","email":"yolo.obrt@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Pula","addressRegion":"Istarska zupanija","addressCountry":"HR"},"priceRange":"199EUR - 499EUR","serviceArea":{"@type":"GeoCircle","geoMidpoint":{"@type":"GeoCoordinates","latitude":44.8666,"longitude":13.8496},"geoRadius":"100000"}}
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YOLO usluge &mdash; AI web stranice i automatizacije</title>
+<meta name="description" content="Profesionalne AI web stranice i poslovne automatizacije za lokalne poduzetnike.">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-html{scroll-behavior:smooth}
-body{background:#0a0a0a;color:#f0f0f0;font-family:'Inter',sans-serif}
-.grad{background:linear-gradient(135deg,#E63946,#C1121F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.btn{background:linear-gradient(135deg,#E63946,#C1121F);color:#fff;padding:14px 32px;border-radius:8px;font-weight:600;font-size:16px;border:none;cursor:pointer;display:inline-block;text-align:center;transition:opacity .2s,transform .2s}
-.btn:hover{opacity:.9;transform:translateY(-1px)}
-.tag{display:inline-block;background:rgba(230,57,70,.15);color:#E63946;border:1px solid rgba(230,57,70,.3);border-radius:100px;padding:6px 18px;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:20px}
-.card{background:#111;border:1px solid #1e1e1e;border-radius:16px;padding:32px;transition:transform .3s,box-shadow .3s}
-.card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(230,57,70,.15)}
-input,textarea,select{background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;border-radius:8px;padding:12px 16px;width:100%;font-family:'Inter',sans-serif;transition:border-color .2s;font-size:15px}
-input:focus,textarea:focus,select:focus{outline:none;border-color:#E63946}
-input::placeholder,textarea::placeholder{color:#555}
-select option{background:#1a1a1a}
-.ok{background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3);color:#4ade80;padding:14px 18px;border-radius:8px;margin-top:12px;display:none}
-.err{background:rgba(230,57,70,.15);border:1px solid rgba(230,57,70,.3);color:#f87171;padding:14px 18px;border-radius:8px;margin-top:12px;display:none}
-.phone-mock{width:220px;background:#111;border:3px solid #333;border-radius:36px;padding:12px;margin:0 auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}
-.phone-screen{background:#0d0d0d;border-radius:26px;overflow:hidden;min-height:380px;display:flex;flex-direction:column}
-.phone-header{background:#1a1a1a;padding:10px 14px;font-size:11px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2a2a2a}
-.phone-msgs{flex:1;padding:10px;display:flex;flex-direction:column;gap:8px}
-.msg-ai{background:#1e1e1e;border-radius:12px 12px 12px 4px;padding:8px 10px;font-size:11px;color:#f0f0f0;max-width:85%;line-height:1.4}
-.msg-user{background:linear-gradient(135deg,#E63946,#C1121F);border-radius:12px 12px 4px 12px;padding:8px 10px;font-size:11px;color:#fff;max-width:85%;align-self:flex-end;line-height:1.4}
-.wa-mock{background:#0b1418;border-radius:16px;overflow:hidden;max-width:280px;margin:0 auto;box-shadow:0 20px 40px rgba(0,0,0,.5)}
-.wa-header{background:#1f2c34;padding:12px 16px;display:flex;align-items:center;gap:10px}
-.wa-msgs{padding:12px;display:flex;flex-direction:column;gap:8px;background:#0b1418;min-height:280px}
-.wa-in{background:#1f2c34;border-radius:0 8px 8px 8px;padding:8px 12px;font-size:12px;color:#e9edef;max-width:80%;line-height:1.4}
-.wa-out{background:#005c4b;border-radius:8px 8px 0 8px;padding:8px 12px;font-size:12px;color:#e9edef;max-width:80%;align-self:flex-end;line-height:1.4}
-.wa-time{font-size:10px;color:#8696a0;margin-top:2px;text-align:right}
-.badge-sale{background:linear-gradient(135deg,#E63946,#C1121F);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:100px;letter-spacing:.05em;display:inline-block;margin-bottom:6px}
-#ai-chat-btn{position:fixed;bottom:28px;right:28px;z-index:9999;width:56px;height:56px;background:linear-gradient(135deg,#E63946,#C1121F);border-radius:50%;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(230,57,70,.5);display:flex;align-items:center;justify-content:center;transition:transform .2s}
-#ai-chat-btn:hover{transform:scale(1.08)}
-#ai-chat-box{position:fixed;bottom:96px;right:28px;z-index:9999;width:330px;background:#111;border:1px solid #2a2a2a;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.7);display:none;flex-direction:column;overflow:hidden;max-height:480px}
-#ai-chat-box.open{display:flex}
-#ai-chat-header{background:#1a1a1a;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #2a2a2a}
-#ai-chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:280px}
-#ai-chat-input-row{display:flex;gap:8px;padding:10px 14px;border-top:1px solid #2a2a2a;background:#111}
-#ai-chat-input{flex:1;background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;border-radius:8px;padding:9px 12px;font-size:14px;font-family:'Inter',sans-serif}
-#ai-chat-send{background:linear-gradient(135deg,#E63946,#C1121F);color:#fff;border:none;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:14px;font-weight:600}
-.ai-msg{background:#1e1e1e;border-radius:10px 10px 10px 3px;padding:9px 12px;font-size:13px;color:#f0f0f0;max-width:90%;line-height:1.5}
-.user-msg{background:linear-gradient(135deg,#E63946,#C1121F);border-radius:10px 10px 3px 10px;padding:9px 12px;font-size:13px;color:#fff;max-width:90%;align-self:flex-end;line-height:1.5}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#f0f0f0}
+.grad-bg{background:linear-gradient(135deg,#E63946 0%,#C1121F 100%)}
+.grad-text{background:linear-gradient(135deg,#E63946 0%,#ff6b6b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.card{background:#141414;border:1px solid #222;border-radius:16px;transition:border-color 0.3s}
+.card:hover{border-color:#E63946}
+.btn-p{background:linear-gradient(135deg,#E63946 0%,#C1121F 100%);color:#fff;padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:opacity .2s,transform .1s;display:inline-block;text-decoration:none}
+.btn-p:hover{opacity:.9;transform:translateY(-1px)}
+.btn-o{border:2px solid #E63946;color:#E63946;padding:12px 30px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;background:transparent;transition:background .2s,color .2s;display:inline-block;text-decoration:none}
+.btn-o:hover{background:#E63946;color:#fff}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,10,10,.95);backdrop-filter:blur(10px);border-bottom:1px solid #222}
+.stag{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#E63946}
+input,textarea,select{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:12px 16px;color:#f0f0f0;width:100%;outline:none;font-family:inherit;font-size:.95rem;box-sizing:border-box}
+input:focus,textarea:focus,select:focus{border-color:#E63946}
+.tag{background:rgba(230,57,70,.15);border:1px solid rgba(230,57,70,.4);border-radius:100px;padding:4px 14px;font-size:.8rem;color:#E63946;display:inline-block}
+.smt{scroll-margin-top:80px}
+.chk{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.75rem;color:#ccc;font-size:.9rem}
+.chki{color:#E63946;font-weight:900;flex-shrink:0;margin-top:1px}
+.toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;border:1px solid #E63946;border-radius:12px;padding:16px 24px;z-index:9999;display:none;color:#f0f0f0;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.toast.show{display:block;animation:sIn .3s ease}
+@keyframes sIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.price{border:2px solid #222;border-radius:20px;padding:2rem;background:#141414}
+.price.feat{border-color:#E63946;background:linear-gradient(180deg,rgba(230,57,70,.08) 0%,#141414 100%)}
+hr.div{border:none;height:1px;background:linear-gradient(90deg,transparent,#333,transparent);margin:80px 0}
+.pkg-option{border:2px solid #222;border-radius:16px;padding:1.5rem;background:#141414;cursor:pointer;transition:border-color .2s,background .2s}
+.pkg-option:hover{border-color:#E63946}
+.pkg-option.selected{border-color:#E63946;background:rgba(230,57,70,.08)}
 </style>
 </head>
 <body>
 
-<nav style="background:rgba(10,10,10,.95);backdrop-filter:blur(12px);border-bottom:1px solid #1e1e1e" class="fixed top-0 left-0 right-0 z-50">
-<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-<a href="#hero" class="text-xl font-bold"><span class="grad">YOLO</span> <span class="text-white">usluge</span></a>
-<div class="hidden md:flex items-center gap-8">
-<a href="#web" class="text-gray-400 text-sm font-medium hover:text-red-500 transition-colors">Web stranice</a>
-<a href="#automatizacije" class="text-gray-400 text-sm font-medium hover:text-red-500 transition-colors">Automatizacije</a>
-<a href="#yolowaiter" class="text-gray-400 text-sm font-medium hover:text-red-500 transition-colors">YOLOwaiter</a>
-<a href="#yoloapointr" class="text-gray-400 text-sm font-medium hover:text-red-500 transition-colors">YOLOapointr</a>
-<a href="#narudi-web" class="text-gray-400 text-sm font-medium hover:text-red-500 transition-colors">Naru&#269;i web</a>
-<a href="#kontakt" class="btn text-sm" style="padding:10px 22px;border-radius:6px">Kontakt</a>
+<!-- AUTH MODAL -->
+<div id="auth-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:2000;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#111;border:1px solid #222;border-radius:20px;width:100%;max-width:420px;overflow:hidden">
+    <!-- Tabs -->
+    <div style="display:flex;border-bottom:1px solid #222">
+      <button id="tab-reg" onclick="switchTab('reg')" style="flex:1;padding:16px;background:transparent;border:none;color:#fff;font-weight:700;cursor:pointer;border-bottom:2px solid #E63946">Registracija</button>
+      <button id="tab-login" onclick="switchTab('login')" style="flex:1;padding:16px;background:transparent;border:none;color:#666;font-weight:700;cursor:pointer;border-bottom:2px solid transparent">Prijava</button>
+    </div>
+
+    <!-- Register form -->
+    <div id="form-reg" style="padding:24px;display:flex;flex-direction:column;gap:12px">
+      <input type="text" id="r-ime" placeholder="Va&#353;e ime i prezime *" required>
+      <input type="text" id="r-firma" placeholder="Naziv firme / obrta">
+      <input type="tel" id="r-tel" placeholder="Telefon">
+      <input type="email" id="r-email" placeholder="Email *" required>
+      <input type="password" id="r-pass" placeholder="Lozinka (min. 6 znakova) *" required>
+      <button onclick="doRegister()" class="btn-p" style="width:100%;margin-top:4px">Kreiraj ra&#269;un &rarr;</button>
+      <div id="r-err" style="display:none;color:#ef4444;font-size:.82rem;text-align:center"></div>
+    </div>
+
+    <!-- Login form -->
+    <div id="form-login" style="padding:24px;display:none;flex-direction:column;gap:12px">
+      <input type="email" id="l-email" placeholder="Email *" required>
+      <input type="password" id="l-pass" placeholder="Lozinka *" required>
+      <button onclick="doLogin()" class="btn-p" style="width:100%;margin-top:4px">Prijavi se &rarr;</button>
+      <div id="l-err" style="display:none;color:#ef4444;font-size:.82rem;text-align:center"></div>
+    </div>
+
+    <div style="padding:0 24px 16px;text-align:center">
+      <button onclick="closeAuthModal()" style="background:transparent;border:none;color:#666;cursor:pointer;font-size:.85rem">Zatvori</button>
+    </div>
+  </div>
 </div>
-<button class="md:hidden text-gray-400" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-</svg>
-</button>
-</div>
-<div id="mobile-menu" class="hidden md:hidden border-t border-gray-800 px-6 py-4 flex flex-col gap-4">
-<a href="#web" class="text-gray-400 text-sm font-medium" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Web stranice</a>
-<a href="#automatizacije" class="text-gray-400 text-sm font-medium" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Automatizacije</a>
-<a href="#yolowaiter" class="text-gray-400 text-sm font-medium" onclick="document.getElementById('mobile-menu').classList.add('hidden')">YOLOwaiter</a>
-<a href="#yoloapointr" class="text-gray-400 text-sm font-medium" onclick="document.getElementById('mobile-menu').classList.add('hidden')">YOLOapointr</a>
-<a href="#narudi-web" class="text-gray-400 text-sm font-medium" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Naru&#269;i web</a>
-<a href="#kontakt" class="btn text-sm text-center" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Kontakt</a>
-</div>
+
+<nav class="nav">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#" class="font-black text-xl tracking-tight"><span class="grad-text">YOLO</span><span class="text-white"> usluge</span></a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+      <a href="#web" class="hover:text-white transition-colors">AI Web</a>
+      <a href="#automatizacije" class="hover:text-white transition-colors">Automatizacije</a>
+      <a href="#yolowaiter" class="hover:text-white transition-colors">YOLOwaiter</a>
+      <a href="#yoloapointr" class="hover:text-white transition-colors">YOLOapointr</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#kontakt" class="hover:text-white transition-colors hidden md:block" style="font-size:.9rem;color:#9ca3af;text-decoration:none">Kontakt</a>
+      <div id="nav-auth" class="flex items-center gap-3"></div>
+    </div>
+  </div>
 </nav>
 
-<section id="hero" style="min-height:100vh;background:radial-gradient(ellipse at top left,rgba(230,57,70,.12) 0%,transparent 60%),radial-gradient(ellipse at bottom right,rgba(193,18,31,.08) 0%,transparent 60%)" class="flex items-center pt-20">
-<div class="max-w-6xl mx-auto px-6 py-24 text-center w-full">
-<div class="tag">AI transformacija biznisa</div>
-<h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Va&#353; biznis.<br/><span class="grad">AI ubrzanje.</span></h1>
-<p class="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">Moderna web prisutnost i pametne automatizacije koje &#353;tede va&#353;e vrijeme i donose vi&#353;e klijenata &#8212; bez tehni&#269;kog znanja.</p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-<a href="#web" class="btn text-lg">Pogledajte usluge</a>
-<a href="#kontakt" style="border:1px solid #2a2a2a;color:#f0f0f0;padding:14px 32px;border-radius:8px;font-weight:600;font-size:16px;display:inline-block;text-align:center" onmouseover="this.style.borderColor='#E63946'" onmouseout="this.style.borderColor='#2a2a2a'">Zatra&#382;ite ponudu</a>
-</div>
-<div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-<div><div class="text-4xl font-black grad mb-2">48h</div><div class="text-gray-500 text-sm">Isporuka web stranice</div></div>
-<div><div class="text-4xl font-black grad mb-2">100%</div><div class="text-gray-500 text-sm">AI-powered rje&#353;enja</div></div>
-<div><div class="text-4xl font-black grad mb-2">24/7</div><div class="text-gray-500 text-sm">Automatizacije rade umjesto vas</div></div>
-</div>
-</div>
+<section class="pt-32 pb-20 px-6">
+  <div class="max-w-6xl mx-auto text-center">
+    <div class="tag mb-6">Pula, Hrvatska &mdash; AI usluge za lokalne poduzetnike</div>
+    <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6">
+      Tvoj biznis.<br><span class="grad-text">AI ubrzanje.</span>
+    </h1>
+    <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+      Profesionalne AI web stranice i pametne automatizacije koje rade dok ti spava&#353;. Bez tehni&#269;kog znanja, bez kompliciranja.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="#web" class="btn-p">Pogledaj usluge</a>
+      <a href="#kontakt" class="btn-o">Zatraži ponudu</a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+      <div class="card p-6"><div class="text-4xl font-black grad-text">48h</div><div class="text-sm text-gray-500 mt-1">isporuka web stranice</div></div>
+      <div class="card p-6"><div class="text-4xl font-black grad-text">100+</div><div class="text-sm text-gray-500 mt-1">automatiziranih procesa</div></div>
+      <div class="card p-6"><div class="text-4xl font-black grad-text">0</div><div class="text-sm text-gray-500 mt-1">tehni&#269;kog znanja potrebno</div></div>
+      <div class="card p-6"><div class="text-4xl font-black grad-text">24/7</div><div class="text-sm text-gray-500 mt-1">AI radi za tebe</div></div>
+    </div>
+  </div>
 </section>
 
-<!-- AKCIJA BANNER -->
-<div id="akcija" style="background:linear-gradient(135deg,#E63946 0%,#C1121F 100%);padding:18px 24px;text-align:center">
-<div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-3">
-<span style="font-size:1.3rem">&#128293;</span>
-<span style="font-weight:800;font-size:1.05rem;color:#fff;letter-spacing:.01em">AKCIJA do 31.3.2026.</span>
-<span style="color:rgba(255,255,255,.7);font-size:.95rem">&#8212;</span>
-<span style="color:#fff;font-size:.95rem"><strong>Starter samo 199&euro;</strong> &nbsp;|&nbsp; <strong>Business samo 399&euro;</strong></span>
-<a href="#narudi-web" style="background:rgba(255,255,255,.2);color:#fff;border:2px solid rgba(255,255,255,.5);padding:7px 20px;border-radius:100px;font-weight:700;font-size:.85rem;white-space:nowrap;text-decoration:none" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'">Naru&#269;i odmah &rarr;</a>
-</div>
-</div>
+<hr class="div">
 
-<section id="web" class="py-24 px-6" style="background:#0d0d0d">
-<div class="max-w-6xl mx-auto">
-<div class="text-center mb-16">
-<div class="tag">Usluga 01</div>
-<h2 class="text-4xl md:text-5xl font-black mb-4">AI izrada web stranica</h2>
-<p class="text-gray-400 text-lg max-w-2xl mx-auto">Profesionalna web prisutnost za va&#353; biznis gotova za 48 sati. Brzo, povoljno, moderno.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-<div class="card">
-<div class="badge-sale">AKCIJA</div>
-<div class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-4">Starter</div>
-<div class="text-5xl font-black mb-1">199<span class="text-2xl text-gray-500">&#8364;</span></div>
-<div style="text-decoration:line-through;color:#555;font-size:.9rem;margin-bottom:2px">299&#8364; redovna cijena</div>
-<div class="text-gray-500 text-sm mb-8">Jednokratno + 10&#8364;/mj hosting*</div>
-<ul class="space-y-3 mb-10">
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Dizajnirana landing stranica prilagodena va&#353;em brendu</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Kontakt forma</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Responzivan dizajn &#8212; savr&#353;eno na svakom ure&#273;aju</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> SEO optimizacija za Google</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Isporuka za 48 sati</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Hosting setup uklju&#269;en</li>
-</ul>
-<a href="#narudi-web" class="btn w-full block">Naru&#269;i Starter &rarr;</a>
-</div>
-<div class="card" style="border:2px solid #E63946;position:relative">
-<div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#E63946,#C1121F);color:#fff;font-size:12px;font-weight:700;padding:4px 16px;border-radius:100px;white-space:nowrap">Najpopularnije</div>
-<div class="badge-sale">AKCIJA</div>
-<div class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-4">Business</div>
-<div class="text-5xl font-black mb-1">399<span class="text-2xl text-gray-500">&#8364;</span></div>
-<div style="text-decoration:line-through;color:#555;font-size:.9rem;margin-bottom:2px">499&#8364; redovna cijena</div>
-<div class="text-gray-500 text-sm mb-8">Jednokratno + 10&#8364;/mj hosting*</div>
-<ul class="space-y-3 mb-10">
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Vi&#353;estrani&#269;ni web site</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> AI chatbot integracija</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Blog / novosti sekcija</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> SEO optimizacija</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> Google Analytics setup</li>
-<li class="flex items-start gap-3 text-gray-300"><span style="color:#E63946;margin-top:2px">&#10003;</span> 1 mjesec podr&#353;ke</li>
-</ul>
-<a href="#narudi-web" class="btn w-full block">Naru&#269;i Business &rarr;</a>
-</div>
-</div>
-<p class="text-center text-gray-600 text-sm mt-6">* Hosting ne uklju&#269;uje domenu. .hr domena ~15&#8364;/god, .com ~12&#8364;/god (npr. hostinger.com).</p>
-</div>
+<section id="web" class="py-20 px-6 smt">
+  <div class="max-w-6xl mx-auto">
+    <div class="stag mb-4">Usluga 01</div>
+    <div class="flex flex-col md:flex-row gap-12 items-start">
+      <div class="md:w-1/2">
+        <h2 class="text-4xl md:text-5xl font-black mb-6">AI izrada<br><span class="grad-text">web stranica</span></h2>
+        <p class="text-gray-400 text-lg mb-6">Moderna, brza i profesionalna web stranica za tvoj biznis u roku od 48 sati. Koristimo AI alate koji su ubrzali produkciju 10x, a u&#353;tedine prenosimo tebi.</p>
+        <p class="text-gray-400 mb-8">Stranica &#263;e biti optimizirana za Google (SEO), prilagodena mobilnim uredajima i spojena s formama za prikupljanje upita.</p>
+        <div class="space-y-2 mb-8">
+          <div class="chk"><span class="chki">&#10003;</span> Dizajn prilagoden tvojoj brandsи</div>
+          <div class="chk"><span class="chki">&#10003;</span> SEO optimizacija od prvog dana</div>
+          <div class="chk"><span class="chki">&#10003;</span> Forme za prikupljanje upita</div>
+          <div class="chk"><span class="chki">&#10003;</span> Mobilni prvo &mdash; savr&#353;eno na svakom uredaju</div>
+          <div class="chk"><span class="chki">&#10003;</span> Hosting postavljen i konfiguriran</div>
+          <div class="chk"><span class="chki">&#10003;</span> Isporuka u 48 sati</div>
+        </div>
+        <a href="#narudi-web" class="btn-p">Naru&#269;i web stranicu</a>
+      </div>
+      <div class="md:w-1/2 flex flex-col gap-4">
+        <div class="price">
+          <div class="text-sm text-gray-500 mb-1">Starter</div>
+          <div class="text-3xl font-black mb-1">250 &euro;</div>
+          <div class="text-sm text-gray-500 mb-4">jednokratno + 15&euro;/mj hosting</div>
+          <div class="chk"><span class="chki">&#10003;</span> Landing page do 5 sekcija</div>
+          <div class="chk"><span class="chki">&#10003;</span> Kontakt forma</div>
+          <div class="chk"><span class="chki">&#10003;</span> Mobilni dizajn</div>
+          <div class="chk"><span class="chki">&#10003;</span> Isporuka 48h</div>
+        </div>
+        <div class="price feat">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="text-sm text-gray-500">Business</div>
+            <span class="tag text-xs">Najpopularnije</span>
+          </div>
+          <div class="text-3xl font-black mb-1">490 &euro;</div>
+          <div class="text-sm text-gray-500 mb-4">jednokratno + 15&euro;/mj hosting</div>
+          <div class="chk"><span class="chki">&#10003;</span> Vi&#353;estrani&#269;na web stranica</div>
+          <div class="chk"><span class="chki">&#10003;</span> Blog ili galerija</div>
+          <div class="chk"><span class="chki">&#10003;</span> Google Analytics</div>
+          <div class="chk"><span class="chki">&#10003;</span> Rezervacije i booking forme</div>
+          <div class="chk"><span class="chki">&#10003;</span> 1 mjesec besplatne podr&#353;ke</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="automatizacije" class="py-24 px-6" style="background:#0a0a0a">
-<div class="max-w-6xl mx-auto">
-<div class="text-center mb-16">
-<div class="tag">Usluga 02</div>
-<h2 class="text-4xl md:text-5xl font-black mb-4">AI savjetovanje &amp; Custom automatizacije</h2>
-<p class="text-gray-400 text-lg max-w-2xl mx-auto">Automatizirajte ponavljaju&#263;e zadatke, integrirajte AI u va&#353;e poslovne procese i &#353;tedite sate svaki dan.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="card">
-<div style="width:52px;height:52px;background:rgba(230,57,70,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-<svg width="26" height="26" fill="none" stroke="#E63946" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
-</div>
-<h3 class="text-xl font-bold mb-3">AI savjetovanje</h3>
-<p class="text-gray-400 leading-relaxed">Analiza va&#353;ih poslovnih procesa i izrada plana digitalne transformacije s konkretnim koracima i alatima.</p>
-</div>
-<div class="card">
-<div style="width:52px;height:52px;background:rgba(230,57,70,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-<svg width="26" height="26" fill="none" stroke="#E63946" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-</div>
-<h3 class="text-xl font-bold mb-3">Workflow automatizacije</h3>
-<p class="text-gray-400 leading-relaxed">Automatizacija email-a, faktura, podsjetnika, upita klijenata i svega ostalog &#353;to vam oduzima dragocjeno vrijeme.</p>
-</div>
-<div class="card">
-<div style="width:52px;height:52px;background:rgba(230,57,70,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-<svg width="26" height="26" fill="none" stroke="#E63946" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-</div>
-<h3 class="text-xl font-bold mb-3">Custom AI agenti</h3>
-<p class="text-gray-400 leading-relaxed">Razvoj prilagodenih AI agenata koji komuniciraju s va&#353;im klijentima, obra&#273;uju upite i rade za vas 24/7.</p>
-</div>
-</div>
-<div class="text-center mt-12"><a href="#kontakt" class="btn text-lg">Zatra&#382;ite konzultaciju</a></div>
-</div>
+<hr class="div">
+
+<!-- NARUDI WEB SECTION -->
+<section id="narudi-web" class="py-20 px-6 smt">
+  <div class="max-w-3xl mx-auto">
+    <div class="stag mb-4">Narudžba</div>
+    <h2 class="text-4xl md:text-5xl font-black mb-4">Naru&#269;i web<br><span class="grad-text">stranicu</span></h2>
+    <p class="text-gray-400 text-lg mb-10">Ispuni obrazac i kontaktirat &#263;emo te u roku 24h s potvrdom i uputama za pla&#263;anje.</p>
+
+    <!-- Package selection -->
+    <div id="pkg-select" class="mb-8">
+      <div class="text-sm text-gray-400 mb-4 font-medium">1. Odaberi paket *</div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="pkg-option" id="pkg-starter" onclick="selectPkg('Starter - 250€')">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div class="font-bold text-lg">Starter</div>
+            <div class="pkg-check" style="width:24px;height:24px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#E63946;font-weight:900"></div>
+          </div>
+          <div class="text-2xl font-black grad-text mb-1">250 &euro;</div>
+          <div class="text-xs text-gray-500 mb-3">+ 15&euro;/mj hosting</div>
+          <div style="font-size:.8rem;color:#888">Landing page do 5 sekcija, kontakt forma, mobilni dizajn, isporuka 48h</div>
+        </div>
+        <div class="pkg-option" id="pkg-business" onclick="selectPkg('Business - 490€')">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div class="font-bold text-lg">Business <span class="tag text-xs ml-1">Popular</span></div>
+            <div class="pkg-check" style="width:24px;height:24px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#E63946;font-weight:900"></div>
+          </div>
+          <div class="text-2xl font-black grad-text mb-1">490 &euro;</div>
+          <div class="text-xs text-gray-500 mb-3">+ 15&euro;/mj hosting</div>
+          <div style="font-size:.8rem;color:#888">Vi&#353;estrani&#269;na, blog/galerija, Analytics, booking, 1mj podr&#353;ke</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login gate -->
+    <div id="narudi-gate" style="display:none;text-align:center;padding:48px 24px;background:#141414;border:1px solid #222;border-radius:16px;margin-top:16px">
+      <div style="font-size:2rem;margin-bottom:12px">&#128272;</div>
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:8px">Prijavite se za nastavak</div>
+      <div style="color:#888;font-size:.9rem;margin-bottom:20px">Kreirajte besplatan ra&#269;un kako bismo mogli pratiti va&#353;u narud&#382;bu.</div>
+      <button onclick="openAuthModal()" class="btn-p">Registracija / Prijava</button>
+    </div>
+
+    <!-- Actual form (shown when logged in) -->
+    <div id="narudi-form-wrap" style="display:none">
+    <form id="form-narudi" class="card p-8">
+
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-sm text-gray-400 mb-2">Naziv firme / obrta *</label>
+          <input type="text" id="n-firma" placeholder="Frizerski salon Ana" required>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-400 mb-2">Va&#353;e ime *</label>
+          <input type="text" id="n-ime" placeholder="Ana Ani&#263;" required>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-sm text-gray-400 mb-2">Email *</label>
+          <input type="email" id="n-email" placeholder="ana@salon.hr" required>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-400 mb-2">Telefon</label>
+          <input type="tel" id="n-telefon" placeholder="+385 91 ...">
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm text-gray-400 mb-2">Djelatnost</label>
+        <input type="text" id="n-djelatnost" placeholder="Frizerski salon, restoran, ordinacija...">
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm text-gray-400 mb-2">Imate li domenu (.hr, .com...)?</label>
+        <select id="n-domena">
+          <option value="da">Da, imam domenu</option>
+          <option value="ne">Ne, trebam novu domenu</option>
+          <option value="pomoc">Nisam siguran/a, trebam pomo&#263;</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm text-gray-400 mb-2">URL postoje&#263;e web stranice (ako imate)</label>
+        <input type="url" id="n-web" placeholder="https://www.vasafirma.hr">
+      </div>
+
+      <!-- COLOR PICKER -->
+      <div class="mb-6">
+        <label class="block text-sm text-gray-400 mb-3">Odaberite stil/boje koje vam se svi&#273;aju</label>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px" id="palette-grid">
+          <div class="palette-opt" data-boje='["#0a0a0a","#ffffff","#E63946"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+            <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
+              <div style="width:20px;height:20px;border-radius:50%;background:#0a0a0a;border:1px solid #555"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#fff;border:1px solid #333"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#E63946"></div>
+            </div>
+            <div style="font-size:.75rem;color:#888">Tamno + Crveno</div>
+          </div>
+          <div class="palette-opt" data-boje='["#f8f9fa","#212529","#2d6a4f"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+            <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
+              <div style="width:20px;height:20px;border-radius:50%;background:#f8f9fa;border:1px solid #333"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#212529"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#2d6a4f"></div>
+            </div>
+            <div style="font-size:.75rem;color:#888">Svje&#382;e Zeleno</div>
+          </div>
+          <div class="palette-opt" data-boje='["#fff8f0","#1a1a1a","#f4845f"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+            <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
+              <div style="width:20px;height:20px;border-radius:50%;background:#fff8f0;border:1px solid #333"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#1a1a1a"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#f4845f"></div>
+            </div>
+            <div style="font-size:.75rem;color:#888">Toplo Naran&#269;asto</div>
+          </div>
+          <div class="palette-opt" data-boje='["#f0f4ff","#1a1a2e","#4361ee"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+            <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
+              <div style="width:20px;height:20px;border-radius:50%;background:#f0f4ff;border:1px solid #333"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#1a1a2e"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#4361ee"></div>
+            </div>
+            <div style="font-size:.75rem;color:#888">Plavo Profesionalno</div>
+          </div>
+          <div class="palette-opt" data-boje='["#fff0f6","#2d1b2e","#c77dff"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+            <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
+              <div style="width:20px;height:20px;border-radius:50%;background:#fff0f6;border:1px solid #333"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#2d1b2e"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#c77dff"></div>
+            </div>
+            <div style="font-size:.75rem;color:#888">Ljubi&#269;asto / Female</div>
+          </div>
+          <div class="palette-opt" data-boje='["custom"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+            <div style="font-size:1.5rem;margin-bottom:4px">&#127912;</div>
+            <div style="font-size:.75rem;color:#888">Vlastite boje</div>
+          </div>
+        </div>
+        <!-- Custom color inputs -->
+        <div id="custom-colors" style="display:none;gap:8px;flex-wrap:wrap;align-items:center">
+          <label style="font-size:.82rem;color:#888">Pozadina:</label>
+          <input type="color" id="boja-bg" value="#ffffff" style="width:40px;height:32px;padding:2px;border-radius:6px;cursor:pointer">
+          <label style="font-size:.82rem;color:#888">Tekst:</label>
+          <input type="color" id="boja-text" value="#1a1a1a" style="width:40px;height:32px;padding:2px;border-radius:6px;cursor:pointer">
+          <label style="font-size:.82rem;color:#888">Naglasak:</label>
+          <input type="color" id="boja-accent" value="#E63946" style="width:40px;height:32px;padding:2px;border-radius:6px;cursor:pointer">
+        </div>
+        <input type="hidden" id="n-boje" value="">
+      </div>
+
+      <!-- FILE UPLOADS -->
+      <div class="mb-4">
+        <label class="block text-sm text-gray-400 mb-2">Logo (ako imate)</label>
+        <div id="logo-dropzone" onclick="document.getElementById('logo-input').click()" style="border:2px dashed #333;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='#E63946'" onmouseout="this.style.borderColor='#333'">
+          <div id="logo-placeholder" style="color:#666;font-size:.9rem">&#128193; Kliknite ili povucite logo ovdje<br><span style="font-size:.75rem">PNG, JPG, SVG &mdash; max 10MB</span></div>
+          <div id="logo-preview" style="display:none"></div>
+        </div>
+        <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm text-gray-400 mb-2">Inspiracijske slike (do 3) &mdash; dizajni koji vam se svi&#273;aju</label>
+        <div id="slike-dropzone" onclick="document.getElementById('slike-input').click()" style="border:2px dashed #333;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='#E63946'" onmouseout="this.style.borderColor='#333'">
+          <div id="slike-placeholder" style="color:#666;font-size:.9rem">&#128444;&#65039; Kliknite za dodavanje slika<br><span style="font-size:.75rem">Do 3 slike, max 10MB svaka</span></div>
+          <div id="slike-preview" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"></div>
+        </div>
+        <input type="file" id="slike-input" accept="image/*" multiple style="display:none" onchange="handleSlikeUpload(this)">
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm text-gray-400 mb-2">Opi&#353;ite va&#353; biznis i &#353;to trebate na stranici *</label>
+        <textarea id="n-opis" rows="4" placeholder="Npr: Imam frizerski salon u Puli, trebam jednostavnu stranicu s galerijom radova, cjenikom i kontaktom..." required></textarea>
+      </div>
+
+      <input type="hidden" id="n-paket" value="">
+      <div id="n-paket-warning" style="display:none;background:rgba(230,57,70,.1);border:1px solid #E63946;border-radius:8px;padding:12px;margin-bottom:16px;font-size:.85rem;color:#E63946">
+        &#9888;&#65039; Odaberite paket (Starter ili Business) gore.
+      </div>
+
+      <button type="submit" id="n-btn" class="btn-p" style="width:100%;text-align:center">Po&#353;alji narud&#382;bu &rarr;</button>
+
+      <div id="n-ok" style="display:none;margin-top:16px;background:rgba(34,197,94,.1);border:1px solid #22c55e;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:8px">&#9989;</div>
+        <div style="font-weight:700;color:#22c55e;margin-bottom:4px">Narud&#382;ba primljena!</div>
+        <div style="font-size:.85rem;color:#ccc">Kontaktirat &#263;emo vas u roku 24h s uputama za pla&#263;anje putem Revoluta i po&#269;etak izrade.</div>
+      </div>
+      <div id="n-err" style="display:none;margin-top:12px;font-size:.85rem;color:#ef4444;text-align:center">Gre&#353;ka. Poku&#353;ajte ponovo ili pi&#353;ite na yolo.obrt@gmail.com</div>
+    </form>
+    </div>
+  </div>
 </section>
 
-<section id="yolowaiter" class="py-24 px-6" style="background:#0d0d0d">
-<div class="max-w-6xl mx-auto">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div>
-<div class="tag">Dolazi uskoro</div>
-<h2 class="text-4xl md:text-5xl font-black mb-6">YOLOwaiter<br/><span class="grad">AI konobar</span></h2>
-<p class="text-gray-400 text-lg leading-relaxed mb-8">QR kod na stolu, gost skenira &#8212; i dobiva AI konobara koji preuzima naru&#269;bine, odgovara na pitanja o meniju i &#353;alje narud&#382;be direktno u kuhinju. Bez &#353;altera, bez &#269;ekanja, bez pogre&#353;aka.</p>
-<ul class="space-y-4">
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Digitalni meni s fotografijama i opisima</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> AI chatbot koji preuzima naru&#269;bine</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Integracija s POS sustavima</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Vi&#353;ejezi&#269;na podr&#353;ka (HR/EN/DE/IT)</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Analytics i statistike narud&#382;bi</li>
-</ul>
-</div>
-<!-- AI chat phone mockup -->
-<div class="flex justify-center">
-<div class="phone-mock">
-<div class="phone-screen">
-<div class="phone-header">
-<div style="width:8px;height:8px;background:#22c55e;border-radius:50%"></div>
-<span>YOLOwaiter AI</span>
-<span style="margin-left:auto;color:#666;font-size:10px">&#127829; Konobar</span>
-</div>
-<div class="phone-msgs">
-<div class="msg-ai">&#128075; Dobrodo&#353;li! Ja sam va&#353; AI konobar. Mogu vam pomo&#263;i s narud&#382;bom.</div>
-<div class="msg-user">Jednu pizzu Margheritu i pivo, hvala!</div>
-<div class="msg-ai">&#127829; Odli&#269;an izbor! Pizza Margherita (9.50&#8364;) + Heineken (4.50&#8364;) = <strong>14.00&#8364;</strong><br/>Potvr&#273;ujemo narud&#382;bu?</div>
-<div class="msg-user">Da, potvrdi!</div>
-<div class="msg-ai">&#10003; Narud&#382;ba poslana u kuhinju! Dolazi za ~15 min. Bon apetit! &#128523;</div>
-</div>
-<div style="background:#1a1a1a;padding:8px;display:flex;gap:6px;align-items:center;border-top:1px solid #2a2a2a">
-<div style="flex:1;background:#0d0d0d;border-radius:20px;padding:6px 12px;font-size:10px;color:#555">Pi&#353;ite poruku...</div>
-<div style="width:28px;height:28px;background:linear-gradient(135deg,#E63946,#C1121F);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px">&#10148;</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div style="background:#111;border:1px solid #1e1e1e;border-radius:20px;padding:40px;margin-top:40px">
-<h3 class="text-2xl font-bold mb-2">Prijava na listu &#269;ekanja</h3>
-<p class="text-gray-400 mb-8">Budite me&#273;u prvima koji &#263;e isprobati YOLOwaiter i dobiti posebnu cijenu.</p>
-<form id="waiter-form">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Ime i prezime</label>
-<input type="text" id="waiter-ime" placeholder="Ivan Horvat"/>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Email adresa</label>
-<input type="email" id="waiter-email" placeholder="vas@email.com" required/>
-</div>
-</div>
-<button type="submit" class="btn w-full mt-2">Prijava na listu &#269;ekanja</button>
-<div id="waiter-ok" class="ok">Hvala! Javit &#263;emo vam se kada YOLOwaiter bude dostupan.</div>
-<div id="waiter-err" class="err">Do&#353;lo je do gre&#353;ke. Molimo poku&#353;ajte opet.</div>
-</form>
-</div>
-</div>
+<hr class="div">
+
+<section id="automatizacije" class="py-20 px-6 smt">
+  <div class="max-w-6xl mx-auto">
+    <div class="stag mb-4">Usluga 02</div>
+    <h2 class="text-4xl md:text-5xl font-black mb-4">AI savjetovanje &amp;<br><span class="grad-text">Custom automatizacije</span></h2>
+    <p class="text-gray-400 text-lg mb-12 max-w-2xl">Tvoj biznis ve&#263; ima procese koji se ponavljaju svaki dan. Uz pravi AI alat, te procese mo&#382;emo automatizirati i u&#353;tedjeti ti sate rada tjedno.</p>
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+      <div class="card p-6">
+        <div class="text-3xl mb-4">&#129302;</div>
+        <h3 class="text-lg font-bold mb-3">AI Savjetovanje</h3>
+        <p class="text-gray-400 text-sm">Analiza tvojih poslovnih procesa i preporuka gdje i kako primijeniti AI da do&#273;e&#353; do stvarnih u&#353;teda i ve&#263;ih prihoda.</p>
+      </div>
+      <div class="card p-6">
+        <div class="text-3xl mb-4">&#9881;&#65039;</div>
+        <h3 class="text-lg font-bold mb-3">Automatizacija procesa</h3>
+        <p class="text-gray-400 text-sm">Spajamo tvoje alate (e-mail, CRM, fakturiranje, narud&#382;be) u automatski tok. Bez ru&#269;nog rada, bez gre&#353;aka.</p>
+      </div>
+      <div class="card p-6">
+        <div class="text-3xl mb-4">&#128200;</div>
+        <h3 class="text-lg font-bold mb-3">AI Agenti za biznis</h3>
+        <p class="text-gray-400 text-sm">Postavimo AI agenta koji odgovara na upite kupaca, &#353;alje ponude, prati leadove ili odr&#382;ava tvoj socialni medij.</p>
+      </div>
+    </div>
+    <div class="card p-2">
+      <div class="flex gap-6 items-start p-6 border-b border-gray-800">
+        <div class="w-12 h-12 rounded-xl grad-bg flex items-center justify-center font-black text-white text-xl flex-shrink-0">1</div>
+        <div><div class="font-bold mb-1">Besplatna analiza (30 min)</div><div class="text-gray-400 text-sm">Razgovor o tvojim trenutnim procesima. Zajedno identificiramo gdje AI mo&#382;e donijeti najve&#263;u vrijednost.</div></div>
+      </div>
+      <div class="flex gap-6 items-start p-6 border-b border-gray-800">
+        <div class="w-12 h-12 rounded-xl grad-bg flex items-center justify-center font-black text-white text-xl flex-shrink-0">2</div>
+        <div><div class="font-bold mb-1">Prijedlog i ponuda</div><div class="text-gray-400 text-sm">Dobiva&#353; konkretan plan: koje alate koristiti, kako ih spojiti i koliko &#263;e to u&#353;tedjeti.</div></div>
+      </div>
+      <div class="flex gap-6 items-start p-6">
+        <div class="w-12 h-12 rounded-xl grad-bg flex items-center justify-center font-black text-white text-xl flex-shrink-0">3</div>
+        <div><div class="font-bold mb-1">Implementacija i podr&#353;ka</div><div class="text-gray-400 text-sm">Postavljamo sve za tebe, educiramo tvoj tim i dostupni smo za pitanja.</div></div>
+      </div>
+    </div>
+    <div class="mt-8 text-center"><a href="#kontakt" class="btn-p">Zatraži besplatnu analizu</a></div>
+  </div>
 </section>
 
-<section id="yoloapointr" class="py-24 px-6" style="background:#0a0a0a">
-<div class="max-w-6xl mx-auto">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div style="background:#111;border:1px solid #1e1e1e;border-radius:20px;padding:40px" class="order-2 lg:order-1">
-<h3 class="text-2xl font-bold mb-2">Prijava na listu &#269;ekanja</h3>
-<p class="text-gray-400 mb-8">Budite me&#273;u prvima koji &#263;e koristiti YOLOapointr i dobiti early-bird cijenu.</p>
-<form id="apointr-form">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Ime i prezime</label>
-<input type="text" id="apointr-ime" placeholder="Ana Ani&#263;"/>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Email adresa</label>
-<input type="email" id="apointr-email" placeholder="vas@email.com" required/>
-</div>
-</div>
-<button type="submit" class="btn w-full mt-2">Prijava na listu &#269;ekanja</button>
-<div id="apointr-ok" class="ok">Hvala! Javit &#263;emo vam se kada YOLOapointr bude dostupan.</div>
-<div id="apointr-err" class="err">Do&#353;lo je do gre&#353;ke. Molimo poku&#353;ajte opet.</div>
-</form>
-</div>
-<div class="order-1 lg:order-2">
-<div class="tag">Dolazi uskoro</div>
-<h2 class="text-4xl md:text-5xl font-black mb-6">YOLOapointr<br/><span class="grad">Booking bez telefona</span></h2>
-<p class="text-gray-400 text-lg leading-relaxed mb-8">Sustav za online rezervacije dizajniran za male biznise &#8212; zubare, frizere, kozmeticare i sve koji rade na termin. Klijenti sami biraju termin, dobivaju automatske podsjetnike, a vi se fokusirate na posao.</p>
-<ul class="space-y-4">
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Online booking 24/7 bez telefonskih poziva</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Automatski SMS i email podsjetnici</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Upravljanje kalendarom i osobljem</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> <strong style="color:#25D366">WhatsApp booking</strong> &#8212; gosti rezerviraju direktno u chatu</li>
-<li class="flex items-center gap-3 text-gray-300"><span style="color:#E63946">&#10003;</span> Prilagodeno za hrvatsko tr&#382;i&#353;te</li>
-</ul>
-</div>
-<!-- WhatsApp booking mockup -->
-<div class="flex justify-center mt-10 order-0 lg:order-3">
-<div class="wa-mock" style="width:100%;max-width:280px">
-<div class="wa-header">
-<div style="width:38px;height:38px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px">&#128203;</div>
-<div style="margin-left:10px">
-<div style="font-weight:700;color:#e9edef;font-size:13px">YOLOapointr Booking</div>
-<div style="font-size:11px;color:#8696a0">online</div>
-</div>
-</div>
-<div class="wa-msgs">
-<div class="wa-in">&#128075; Dobar dan! &#381;elite zaka&#382;ati termin? Napi&#353;ite ime usluge i &#382;eljeni datum.<div class="wa-time">10:02</div></div>
-<div class="wa-out">&#352;i&#353;anje, sutra 11h<div class="wa-time">10:03 &#10003;&#10003;</div></div>
-<div class="wa-in">&#10003; Termin dostupan! <strong>Utorak 11:00h</strong><br/>Majstor: Damir &bull; 20&#8364;<br/>Potvr&#273;ujete?<div class="wa-time">10:03</div></div>
-<div class="wa-out">Da, potvrdi!<div class="wa-time">10:04 &#10003;&#10003;</div></div>
-<div class="wa-in">&#10003; Rezervirano! Podsjetnik stiz&#233; dan ranije. Vidimo se!<div class="wa-time">10:04</div></div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<hr class="div">
+
+<section id="yolowaiter" class="py-20 px-6 smt">
+  <div class="max-w-6xl mx-auto">
+    <div class="stag mb-4">Dolazi uskoro</div>
+    <div class="flex flex-col md:flex-row gap-12 items-center">
+      <div class="md:w-1/2">
+        <div class="tag mb-4">Za restorane i kafi&#263;e</div>
+        <h2 class="text-4xl md:text-5xl font-black mb-6"><span class="grad-text">YOLOwaiter</span><br>AI konobar koji nikad ne spava</h2>
+        <p class="text-gray-400 text-lg mb-6">Gosti skeniraju QR kod, razgovaraju s AI konobarom, naru&#269;uju &mdash; a ti &#353;tedi&#353; na osoblju i gre&#353;kama. Sustav koji se ispla&#263;uje ve&#263; prvog tjedna.</p>
+        <div class="space-y-2 mb-6">
+          <div class="chk"><span class="chki">&#10003;</span> QR kod na stolu &rarr; AI konobar odmah spreman</div>
+          <div class="chk"><span class="chki">&#10003;</span> Vi&#353;ejezi&#269;ni &mdash; gosti naru&#269;uju na svom jeziku</div>
+          <div class="chk"><span class="chki">&#10003;</span> Preporuke i upsell automatski</div>
+          <div class="chk"><span class="chki">&#10003;</span> Narud&#382;be idu direktno u kuhinju</div>
+          <div class="chk"><span class="chki">&#10003;</span> Manje gre&#353;aka, ve&#263;e naru&#269;ivanje</div>
+        </div>
+        <p class="text-sm text-gray-500 mb-4">Biti &#263;e dostupno uskoro. Prijavi se i budi me&#273; prvima u Istri.</p>
+        <form id="form-waiter" class="flex flex-col sm:flex-row gap-3">
+          <input type="email" id="waiter-email" placeholder="tvoj@email.com" style="flex:1" required>
+          <button type="submit" class="btn-p" style="white-space:nowrap;padding:14px 24px">Na listu &#269;ekanja</button>
+        </form>
+        <div id="waiter-ok" style="display:none;margin-top:8px;font-size:.85rem;color:#22c55e">&#10003; Uspje&#353;no! Javit &#263;emo ti se uskoro.</div>
+      </div>
+      <div class="md:w-1/2">
+        <div class="card p-8 text-center">
+          <div class="w-24 h-24 mx-auto mb-6 rounded-2xl grad-bg flex items-center justify-center text-5xl">&#128241;</div>
+          <div class="text-xl font-bold mb-2">Skeniraj i naru&#269;i</div>
+          <div class="text-gray-400 text-sm mb-6">Gost skenira QR, odabire jela i pi&#263;a, pla&#263;a &mdash; sve bez &#269;ekanja konobara.</div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-gray-800 rounded-lg p-3 text-xs text-gray-400"><div class="text-lg mb-1">&#127829;</div>Pizza<br><span class="text-white font-bold">9.50&#8364;</span></div>
+            <div class="bg-gray-800 rounded-lg p-3 text-xs text-gray-400"><div class="text-lg mb-1">&#127864;</div>Pivo<br><span class="text-white font-bold">4.50&#8364;</span></div>
+            <div class="bg-gray-800 rounded-lg p-3 text-xs text-gray-400"><div class="text-lg mb-1">&#9749;</div>Kava<br><span class="text-white font-bold">1.80&#8364;</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- NARU&#268;I WEB SEKCIJA -->
-<section id="narudi-web" class="py-24 px-6" style="background:#0d0d0d">
-<div class="max-w-3xl mx-auto">
-<div class="text-center mb-12">
-<div class="tag">Naru&#269;ite odmah</div>
-<h2 class="text-4xl md:text-5xl font-black mb-4">Naru&#269;ite web stranicu</h2>
-<p class="text-gray-400 text-lg max-w-xl mx-auto">Popunite obrazac i javit &#263;emo vam se unutar 24 sata s potvrdom i uputama.</p>
-</div>
+<hr class="div">
 
-<!-- Package selector -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-<div class="card cursor-pointer border-2 transition-all" id="pkg-starter" onclick="selectPkg('starter')" style="border-color:#E63946;position:relative">
-<div style="position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#E63946,#C1121F);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff" id="check-starter">&#10003;</div>
-<div class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Starter</div>
-<div class="text-3xl font-black mb-1">199 <span class="text-lg text-gray-500">&#8364;</span></div>
-<div class="text-gray-500 text-sm mb-3"><s>299&#8364;</s> do 31.3.2026.</div>
-<div class="text-gray-400 text-sm">Landing page, 5 sekcija, hosting</div>
-</div>
-<div class="card cursor-pointer border-2 transition-all" id="pkg-business" onclick="selectPkg('business')" style="border-color:#2a2a2a;position:relative">
-<div style="position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;background:#2a2a2a;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555" id="check-business">&#10003;</div>
-<div class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Business</div>
-<div class="text-3xl font-black mb-1">399 <span class="text-lg text-gray-500">&#8364;</span></div>
-<div class="text-gray-500 text-sm mb-3"><s>499&#8364;</s> do 31.3.2026.</div>
-<div class="text-gray-400 text-sm">Vi&#353;estrani&#269;ni, AI chatbot, blog, SEO</div>
-</div>
-</div>
-
-<div style="background:#111;border:1px solid #1e1e1e;border-radius:20px;padding:40px">
-<form id="form-narudi">
-<input type="hidden" id="n-paket" value="starter"/>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Va&#353;e ime i prezime *</label>
-<input type="text" id="n-ime" placeholder="Ivan Horvat" required/>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Email adresa *</label>
-<input type="email" id="n-email" placeholder="ivan@firma.hr" required/>
-</div>
-</div>
-<div class="mb-4">
-<label class="block text-sm font-medium text-gray-400 mb-2">Telefon / WhatsApp *</label>
-<input type="tel" id="n-telefon" placeholder="+385 91 234 5678" required/>
-</div>
-<div class="mb-4">
-<label class="block text-sm font-medium text-gray-400 mb-2">Naziv biznisa *</label>
-<input type="text" id="n-biznis" placeholder="Moj obrt d.o.o." required/>
-</div>
-<div class="mb-4">
-<label class="block text-sm font-medium text-gray-400 mb-2">Djelatnost / tip biznisa</label>
-<input type="text" id="n-djelatnost" placeholder="Frizer, zubar, restoran, servis..."/>
-</div>
-<div class="mb-4">
-<label class="block text-sm font-medium text-gray-400 mb-2">Postoji li ve&#263; web stranica?</label>
-<input type="url" id="n-postojeci-web" placeholder="https://...  (ostavite prazno ako nema)"/>
-</div>
-<div class="mb-6">
-<label class="block text-sm font-medium text-gray-400 mb-2">Kratki opis &#8212; &#353;to &#382;elite na stranici</label>
-<textarea id="n-opis" rows="4" placeholder="Npr: Trebam landing page za frizerski salon s kontakt formom, galerijom radova i cjenikom..."></textarea>
-</div>
-<div style="background:rgba(230,57,70,.08);border:1px solid rgba(230,57,70,.2);border-radius:10px;padding:14px;margin-bottom:20px;font-size:.85rem;color:#aaa">
-Odabrali ste: <strong id="pkg-label" style="color:#E63946">Starter &#8212; 199&#8364;</strong>. Javit &#263;emo vam se u roku 24h s ugovorom i uputama za pla&#263;anje.
-</div>
-<button type="submit" id="narudi-btn" class="btn w-full text-lg">Po&#353;aljite narud&#382;bu &rarr;</button>
-<div id="narudi-ok" class="ok">Hvala! Va&#353;a narud&#382;ba je primljena. Javit &#263;emo vam se unutar 24 sata.</div>
-<div id="narudi-err" class="err">Do&#353;lo je do gre&#353;ke. Molimo pi&#353;ite na <a href="mailto:yolo.obrt@gmail.com" style="color:#E63946">yolo.obrt@gmail.com</a></div>
-</form>
-</div>
-</div>
+<section id="yoloapointr" class="py-20 px-6 smt">
+  <div class="max-w-6xl mx-auto">
+    <div class="stag mb-4">Dolazi uskoro</div>
+    <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
+      <div class="md:w-1/2">
+        <div class="tag mb-4">Za zdravstvene i beauty usluge</div>
+        <h2 class="text-4xl md:text-5xl font-black mb-6"><span class="grad-text">YOLOapointr</span><br>Booking bez telefona</h2>
+        <p class="text-gray-400 text-lg mb-6">Tvoji klijenti rezerviraju termin online, 24/7 &mdash; bez poziva, bez SMS-a. Idealno za zubare, frizere, kozmetiku, fizioterapeute.</p>
+        <div class="space-y-2 mb-6">
+          <div class="chk"><span class="chki">&#10003;</span> Online booking 24/7 s tvoje web stranice</div>
+          <div class="chk"><span class="chki">&#10003;</span> Automatski podsjetnici SMS i email</div>
+          <div class="chk"><span class="chki">&#10003;</span> Upravljanje rasporedima i slobodnim terminima</div>
+          <div class="chk"><span class="chki">&#10003;</span> Vi&#353;e osoblja &mdash; svaki ima svoj kalendar</div>
+          <div class="chk"><span class="chki">&#10003;</span> Analitika: tko naru&#269;uje, koliko, kada</div>
+        </div>
+        <p class="text-sm text-gray-500 mb-4">Trenutno u razvoju. Prijavi se i dobij early bird popust.</p>
+        <form id="form-apointr" class="flex flex-col sm:flex-row gap-3">
+          <input type="email" id="apointr-email" placeholder="tvoj@email.com" style="flex:1" required>
+          <button type="submit" class="btn-p" style="white-space:nowrap;padding:14px 24px">Early bird lista</button>
+        </form>
+        <div id="apointr-ok" style="display:none;margin-top:8px;font-size:.85rem;color:#22c55e">&#10003; Uspje&#353;no! Javit &#263;emo ti se uskoro.</div>
+      </div>
+      <div class="md:w-1/2">
+        <div class="card p-8">
+          <div class="text-sm text-gray-500 mb-4">Petak, 7. oujka &mdash; raspored</div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
+              <div class="w-1 h-12 grad-bg rounded-full"></div>
+              <div><div class="text-sm font-bold">Marko P. &mdash; Pregled</div><div class="text-xs text-gray-500">09:00 &mdash; 09:30</div></div>
+              <span class="ml-auto tag text-xs">Potvrdeno</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
+              <div class="w-1 h-12 grad-bg rounded-full"></div>
+              <div><div class="text-sm font-bold">Ana K. &mdash; &#268;i&#353;&#263;enje</div><div class="text-xs text-gray-500">10:00 &mdash; 11:00</div></div>
+              <span class="ml-auto tag text-xs">Potvrdeno</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg opacity-40">
+              <div class="w-1 h-12 bg-gray-600 rounded-full"></div>
+              <div><div class="text-sm text-gray-400 font-bold">11:30 &mdash; Slobodan termin</div><div class="text-xs text-gray-500">Online booking aktivan</div></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
+              <div class="w-1 h-12 grad-bg rounded-full"></div>
+              <div><div class="text-sm font-bold">Ivan S. &mdash; Konzultacija</div><div class="text-xs text-gray-500">14:00 &mdash; 14:30</div></div>
+              <span class="ml-auto tag text-xs">Potvrdeno</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="kontakt" class="py-24 px-6" style="background:#0a0a0a">
-<div class="max-w-6xl mx-auto">
-<div class="text-center mb-16">
-<div class="tag">Kontakt</div>
-<h2 class="text-4xl md:text-5xl font-black mb-4">Razgovarajmo</h2>
-<p class="text-gray-400 text-lg max-w-xl mx-auto">Opi&#353;ite &#353;to trebate i javit &#263;emo vam se unutar 24 sata s konkretnom ponudom.</p>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
-<div class="lg:col-span-2 flex flex-col justify-center">
-<div class="mb-10">
-<div class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-4">Email</div>
-<a href="mailto:yolo.obrt@gmail.com" class="text-white text-lg font-medium hover:text-red-500 transition-colors">yolo.obrt@gmail.com</a>
-</div>
-<div class="mb-10">
-<div class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-4">Odgovaramo na</div>
-<div class="text-gray-300">Web stranice &bull; Automatizacije<br/>YOLOwaiter &bull; YOLOapointr<br/>Partnerstva &bull; Custom projekti</div>
-</div>
-<div style="background:rgba(230,57,70,.08);border:1px solid rgba(230,57,70,.2);border-radius:12px;padding:20px">
-<div class="text-sm font-semibold" style="color:#E63946">Brz odgovor</div>
-<div class="text-gray-400 text-sm mt-1">Obi&#269;no odgovaramo unutar nekoliko sati u radne dane.</div>
-</div>
-</div>
-<div class="lg:col-span-3" style="background:#111;border:1px solid #1e1e1e;border-radius:20px;padding:40px">
-<form id="contact-form">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Ime i prezime</label>
-<input type="text" id="contact-ime" placeholder="Ivan Horvat" required/>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-400 mb-2">Email adresa</label>
-<input type="email" id="contact-email" placeholder="ivan@email.com" required/>
-</div>
-</div>
-<div class="mb-4">
-<label class="block text-sm font-medium text-gray-400 mb-2">Telefon (opcionalno)</label>
-<input type="tel" id="contact-telefon" placeholder="+385 91 234 5678"/>
-</div>
-<div class="mb-4">
-<label class="block text-sm font-medium text-gray-400 mb-2">Koja vas usluga zanima?</label>
-<select id="contact-usluga">
-<option value="">Odaberite uslugu...</option>
-<option value="web-starter">Web stranica - Starter (199&#8364; akcija)</option>
-<option value="web-business">Web stranica - Business (399&#8364; akcija)</option>
-<option value="automatizacije">AI savjetovanje &amp; Automatizacije</option>
-<option value="yolowaiter">YOLOwaiter - AI konobar</option>
-<option value="yoloapointr">YOLOapointr - Online booking</option>
-<option value="custom">Custom projekt / Ostalo</option>
-</select>
-</div>
-<div class="mb-6">
-<label class="block text-sm font-medium text-gray-400 mb-2">Poruka</label>
-<textarea id="contact-poruka" rows="5" placeholder="Opi&#353;ite ukratko &#353;to trebate ili &#353;to vas zanima..."></textarea>
-</div>
-<button type="submit" class="btn w-full text-lg">Po&#353;aljite poruku</button>
-<div id="contact-ok" class="ok">Hvala na poruci! Javit &#263;emo vam se unutar 24 sata.</div>
-<div id="contact-err" class="err">Do&#353;lo je do gre&#353;ke. Molimo po&#353;aljite email direktno na yolo.obrt@gmail.com</div>
-</form>
-</div>
-</div>
-</div>
+<hr class="div">
+
+<section id="kontakt" class="py-20 px-6 smt">
+  <div class="max-w-2xl mx-auto text-center">
+    <div class="stag mb-4">Kontakt</div>
+    <h2 class="text-4xl md:text-5xl font-black mb-4">Ozbiljno razmi&#353;lja&#353;?<br><span class="grad-text">Javi se.</span></h2>
+    <p class="text-gray-400 mb-10">Bez obaveza. Razgovaramo o tome &#353;to treba&#353; i vidimo ima li smisla suradnja.</p>
+    <form id="form-kontakt" class="card p-8 text-left">
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div><label class="block text-sm text-gray-400 mb-2">Ime i prezime *</label><input type="text" id="k-ime" placeholder="Ante Anti&#263;" required></div>
+        <div><label class="block text-sm text-gray-400 mb-2">Email *</label><input type="email" id="k-email" placeholder="ante@firma.hr" required></div>
+      </div>
+      <div class="mb-4"><label class="block text-sm text-gray-400 mb-2">Telefon</label><input type="tel" id="k-telefon" placeholder="+385 91 ..."></div>
+      <div class="mb-4">
+        <label class="block text-sm text-gray-400 mb-2">Koja te usluga zanima?</label>
+        <select id="k-usluga">
+          <option value="">Odaberi...</option>
+          <option value="web">AI izrada web stranice</option>
+          <option value="automatizacije">AI savjetovanje / Automatizacije</option>
+          <option value="yolowaiter">YOLOwaiter</option>
+          <option value="yoloapointr">YOLOapointr</option>
+          <option value="ostalo">Ne&#353;to drugo</option>
+        </select>
+      </div>
+      <div class="mb-6"><label class="block text-sm text-gray-400 mb-2">Poruka</label><textarea id="k-poruka" rows="4" placeholder="Ukratko opi&#353;i svoj biznis i &#353;to te zanima..."></textarea></div>
+      <button type="submit" id="k-btn" class="btn-p w-full text-center" style="width:100%">Po&#353;alji upit &rarr;</button>
+      <div id="k-ok" style="display:none;margin-top:12px;font-size:.85rem;color:#22c55e;text-align:center">&#10003; Hvala! Javit &#263;emo se u roku 24 sata.</div>
+      <div id="k-err" style="display:none;margin-top:12px;font-size:.85rem;color:#ef4444;text-align:center">Ne&#353;to je po&#353;lo krivo. Poku&#353;aj opet ili pi&#353;i na yolo.obrt@gmail.com</div>
+    </form>
+  </div>
 </section>
 
-<footer style="background:#0a0a0a;border-top:1px solid #1e1e1e" class="py-12 px-6">
-<div class="max-w-6xl mx-auto">
-<div class="flex flex-col md:flex-row justify-between items-center gap-6">
-<div>
-<div class="text-xl font-bold mb-1"><span class="grad">YOLO</span> <span class="text-white">usluge</span></div>
-<div class="text-gray-500 text-sm">AI transformacija za va&#353; biznis</div>
-</div>
-<div class="flex flex-wrap gap-6 text-sm text-gray-500">
-<a href="#web" class="hover:text-white transition-colors">Web stranice</a>
-<a href="#automatizacije" class="hover:text-white transition-colors">Automatizacije</a>
-<a href="#yolowaiter" class="hover:text-white transition-colors">YOLOwaiter</a>
-<a href="#yoloapointr" class="hover:text-white transition-colors">YOLOapointr</a>
-<a href="#narudi-web" class="hover:text-white transition-colors">Naru&#269;i web</a>
-<a href="#kontakt" class="hover:text-white transition-colors">Kontakt</a>
-</div>
-<a href="mailto:yolo.obrt@gmail.com" class="text-sm text-gray-500 hover:text-white transition-colors">yolo.obrt@gmail.com</a>
-</div>
-<div style="border-top:1px solid #111" class="mt-8 pt-8 text-center text-gray-600 text-sm">&copy; 2026 YOLO usluge &#8212; YOLO obrt, Pula. Sva prava pridr&#382;ana.</div>
-</div>
+<footer style="border-top:1px solid #111;padding:40px 24px">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="font-black text-xl"><span class="grad-text">YOLO</span><span class="text-white"> usluge</span></div>
+    <div class="text-gray-600 text-sm">YOLO obrt &mdash; Pula, Hrvatska</div>
+    <div class="text-gray-600 text-sm"><a href="mailto:yolo.obrt@gmail.com" style="color:#666;text-decoration:none" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">yolo.obrt@gmail.com</a></div>
+  </div>
 </footer>
 
-<!-- AI CHAT WIDGET -->
-<button id="ai-chat-btn" onclick="toggleChat()" title="Pitajte nas">
-<svg width="26" height="26" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z"/></svg>
-</button>
-
-<div id="ai-chat-box">
-<div id="ai-chat-header">
-<div>
-<div style="font-weight:700;font-size:.95rem">&#129302; YOLO AI Asistent</div>
-<div style="font-size:.75rem;color:#666">Pitajte nas bilo &#353;to</div>
-</div>
-<button onclick="toggleChat()" style="background:none;border:none;color:#666;cursor:pointer;font-size:1.2rem">&#10005;</button>
-</div>
-<div id="ai-chat-msgs">
-<div class="ai-msg">&#128075; Dobar dan! Ja sam YOLO AI asistent. Mogu vam odgovoriti na pitanja o na&#353;im uslugama, cijenama i dostupnosti. Kako vam mogu pomo&#263;i?</div>
-</div>
-<div id="ai-chat-input-row">
-<input type="text" id="ai-chat-input" placeholder="Napi&#353;ite pitanje..." onkeydown="if(event.key==='Enter')sendChat()"/>
-<button id="ai-chat-send" onclick="sendChat()">&#10148;</button>
-</div>
-</div>
+<div id="toast" class="toast"></div>
 
 <script>
-var SB_URL="https://jmgmphsjgxnyerlhzeem.supabase.co";
-var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptZ21waHNqZ3hueWVybGh6ZWVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4ODA0MDgsImV4cCI6MjA4ODQ1NjQwOH0.P_-afJ50ma6HQ7VpcLEe1sMz-bcrxBeY2-At38N1HkY";
-var sb=supabase.createClient(SB_URL,SB_KEY);
-// OpenAI key — set via Vercel environment variable OPENAI_KEY or replace placeholder
-var _k1="sk-proj-JVomFBbaApypUvLvEhak";
-var _k2="iAqFXi2dy-rEj4Qr_MBdcVqaXtRKybQFDDpQK_ZWZcwlmHuRPZiw8-T3BlbkFJ";
-var _k3="WkwPmUjNK4ISY6CG4vX982VdAq5kRizOQxMNHgNg4R21F-Q2kevuOFdGTzw76dfxHW3SE7ThMA";
-var OAI_KEY=_k1+_k2+_k3;
+const SB_URL='https://jmgmphsjgxnyerlhzeem.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptZ21waHNqZ3hueWVybGh6ZWVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4ODA0MDgsImV4cCI6MjA4ODQ1NjQwOH0.P_-afJ50ma6HQ7VpcLEe1sMz-bcrxBeY2-At38N1HkY';
+const sb=supabase.createClient(SB_URL,SB_KEY);
 
-function show(id){document.getElementById(id).style.display='block'}
-function hide(id){document.getElementById(id).style.display='none'}
+function toast(msg,ok){const t=document.getElementById('toast');t.textContent=msg;t.style.borderColor=ok?'#22c55e':'#E63946';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);}
 
-var selectedPkg='starter';
-function selectPkg(pkg){
-  selectedPkg=pkg;
-  document.getElementById('n-paket').value=pkg;
-  var labels={starter:'Starter &#8212; 199&#8364;',business:'Business &#8212; 399&#8364;'};
-  document.getElementById('pkg-label').innerHTML=labels[pkg];
-  ['starter','business'].forEach(function(id){
-    var card=document.getElementById('pkg-'+id);
-    var check=document.getElementById('check-'+id);
-    if(id===pkg){card.style.borderColor='#E63946';check.style.background='linear-gradient(135deg,#E63946,#C1121F)';check.style.color='#fff';}
-    else{card.style.borderColor='#2a2a2a';check.style.background='#2a2a2a';check.style.color='#555';}
+// =====================
+// AUTH
+// =====================
+let currentUser = null;
+
+function updateNavAuth() {
+  const navAuth = document.getElementById('nav-auth');
+  if (!navAuth) return;
+  if (currentUser) {
+    const ime = currentUser.user_metadata?.ime || currentUser.email.split('@')[0];
+    navAuth.innerHTML = '<span style="color:#888;font-size:.85rem">\uD83D\uDC64 ' + ime + '</span> <button onclick="sb.auth.signOut()" class="btn-o" style="padding:8px 16px;font-size:.8rem">Odjava</button>';
+  } else {
+    navAuth.innerHTML = '<button onclick="openAuthModal()" class="btn-p" style="padding:10px 20px;font-size:.85rem">Prijava / Registracija</button>';
+  }
+}
+
+function openAuthModal() {
+  const m = document.getElementById('auth-modal');
+  m.style.display = 'flex';
+}
+function closeAuthModal() {
+  document.getElementById('auth-modal').style.display = 'none';
+}
+function switchTab(tab) {
+  document.getElementById('form-reg').style.display = tab==='reg' ? 'flex' : 'none';
+  document.getElementById('form-login').style.display = tab==='login' ? 'flex' : 'none';
+  document.getElementById('tab-reg').style.color = tab==='reg' ? '#fff' : '#666';
+  document.getElementById('tab-login').style.color = tab==='login' ? '#fff' : '#666';
+  document.getElementById('tab-reg').style.borderBottomColor = tab==='reg' ? '#E63946' : 'transparent';
+  document.getElementById('tab-login').style.borderBottomColor = tab==='login' ? '#E63946' : 'transparent';
+}
+async function doRegister() {
+  const ime = document.getElementById('r-ime').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  const pass = document.getElementById('r-pass').value;
+  const firma = document.getElementById('r-firma').value.trim();
+  const telefon = document.getElementById('r-tel').value.trim();
+  const errDiv = document.getElementById('r-err');
+  if (!ime || !email || !pass) { errDiv.textContent='Molimo popunite obavezna polja.'; errDiv.style.display='block'; return; }
+  if (pass.length < 6) { errDiv.textContent='Lozinka mora imati min. 6 znakova.'; errDiv.style.display='block'; return; }
+  errDiv.style.display='none';
+  const {error} = await sb.auth.signUp({
+    email, password: pass,
+    options: { data: { ime, firma, telefon } }
+  });
+  if (error) { errDiv.textContent=error.message; errDiv.style.display='block'; }
+  else { toast('Ra\u010dun kreiran! Dobrodo\u0161li \uD83C\uDF89', true); }
+}
+async function doLogin() {
+  const email = document.getElementById('l-email').value.trim();
+  const pass = document.getElementById('l-pass').value;
+  const errDiv = document.getElementById('l-err');
+  errDiv.style.display='none';
+  const {error} = await sb.auth.signInWithPassword({email, password: pass});
+  if (error) { errDiv.textContent='Krivi email ili lozinka.'; errDiv.style.display='block'; }
+  else { toast('Prijavljeni ste!', true); }
+}
+
+document.getElementById('auth-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeAuthModal();
+});
+
+// =====================
+// NARUDI WEB AUTH GATE
+// =====================
+function updateNarudiGate() {
+  const gate = document.getElementById('narudi-gate');
+  const formWrap = document.getElementById('narudi-form-wrap');
+  if (!gate || !formWrap) return;
+  if (currentUser) {
+    gate.style.display = 'none';
+    formWrap.style.display = 'block';
+    const emailEl = document.getElementById('n-email');
+    if (emailEl && currentUser.email) emailEl.value = currentUser.email;
+    const imeEl = document.getElementById('n-ime');
+    if (imeEl && currentUser.user_metadata?.ime) imeEl.value = currentUser.user_metadata.ime;
+  } else {
+    gate.style.display = 'block';
+    formWrap.style.display = 'none';
+  }
+}
+
+sb.auth.onAuthStateChange((event, session) => {
+  currentUser = session?.user || null;
+  updateNavAuth();
+  updateNarudiGate();
+  if (event === 'SIGNED_IN') closeAuthModal();
+});
+
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  currentUser = session?.user || null;
+  updateNavAuth();
+  updateNarudiGate();
+})();
+
+// =====================
+// PACKAGE SELECTION
+// =====================
+let selectedPkg = '';
+
+function selectPkg(pkg) {
+  selectedPkg = pkg;
+  document.getElementById('n-paket').value = pkg;
+  document.getElementById('n-paket-warning').style.display = 'none';
+  document.querySelectorAll('.pkg-option').forEach(el => {
+    el.style.borderColor = '#222';
+    el.classList.remove('selected');
+    const c = el.querySelector('.pkg-check');
+    if (c) c.innerHTML = '';
+  });
+  if (pkg.includes('Starter')) {
+    const el = document.getElementById('pkg-starter');
+    if (el) { el.style.borderColor = '#E63946'; el.classList.add('selected'); const c = el.querySelector('.pkg-check'); if (c) c.innerHTML = '\u2713'; }
+  } else {
+    const el = document.getElementById('pkg-business');
+    if (el) { el.style.borderColor = '#E63946'; el.classList.add('selected'); const c = el.querySelector('.pkg-check'); if (c) c.innerHTML = '\u2713'; }
+  }
+}
+
+// =====================
+// COLOR PALETTE
+// =====================
+let selectedBoje = [];
+
+function selectPalette(el) {
+  document.querySelectorAll('.palette-opt').forEach(o => o.style.borderColor='#333');
+  el.style.borderColor = '#E63946';
+  const boje = JSON.parse(el.dataset.boje);
+  const customDiv = document.getElementById('custom-colors');
+  if (boje[0] === 'custom') {
+    customDiv.style.display = 'flex';
+    selectedBoje = [];
+  } else {
+    customDiv.style.display = 'none';
+    selectedBoje = boje;
+    document.getElementById('n-boje').value = JSON.stringify(boje);
+  }
+}
+
+document.getElementById('boja-bg')?.addEventListener('change', updateCustomBoje);
+document.getElementById('boja-text')?.addEventListener('change', updateCustomBoje);
+document.getElementById('boja-accent')?.addEventListener('change', updateCustomBoje);
+
+function updateCustomBoje() {
+  const bg = document.getElementById('boja-bg').value;
+  const text = document.getElementById('boja-text').value;
+  const accent = document.getElementById('boja-accent').value;
+  selectedBoje = [bg, text, accent];
+  document.getElementById('n-boje').value = JSON.stringify(selectedBoje);
+}
+
+// =====================
+// FILE UPLOAD
+// =====================
+let logoFile = null;
+let slikeFiles = [];
+
+function handleLogoUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 10485760) { toast('Logo je prevelik (max 10MB)', false); return; }
+  logoFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const prev = document.getElementById('logo-preview');
+    const ph = document.getElementById('logo-placeholder');
+    ph.style.display = 'none';
+    prev.style.display = 'block';
+    prev.innerHTML = '<img src="' + e.target.result + '" style="max-height:80px;border-radius:8px;margin:0 auto;display:block"><div style="font-size:.75rem;color:#888;margin-top:8px">' + file.name + '</div>';
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleSlikeUpload(input) {
+  const files = Array.from(input.files).slice(0, 3);
+  if (files.some(f => f.size > 10485760)) { toast('Svaka slika mora biti max 10MB', false); return; }
+  slikeFiles = files;
+  const prev = document.getElementById('slike-preview');
+  const ph = document.getElementById('slike-placeholder');
+  ph.style.display = files.length ? 'none' : 'block';
+  prev.innerHTML = '';
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.cssText = 'width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #333';
+      prev.appendChild(img);
+    };
+    reader.readAsDataURL(file);
   });
 }
 
-document.getElementById("waiter-form").addEventListener("submit",async function(e){
-  e.preventDefault();
-  var ime=document.getElementById("waiter-ime").value.trim();
-  var email=document.getElementById("waiter-email").value.trim();
-  hide("waiter-ok");hide("waiter-err");
-  try{var r=await sb.from("yolowaiter_waitlist").insert([{ime:ime,email:email}]);if(r.error)throw r.error;show("waiter-ok");this.reset();}
-  catch(ex){console.error(ex);show("waiter-err");}
-});
-
-document.getElementById("apointr-form").addEventListener("submit",async function(e){
-  e.preventDefault();
-  var ime=document.getElementById("apointr-ime").value.trim();
-  var email=document.getElementById("apointr-email").value.trim();
-  hide("apointr-ok");hide("apointr-err");
-  try{var r=await sb.from("yoloapointr_waitlist").insert([{ime:ime,email:email}]);if(r.error)throw r.error;show("apointr-ok");this.reset();}
-  catch(ex){console.error(ex);show("apointr-err");}
-});
-
-document.getElementById("form-narudi").addEventListener("submit",async function(e){
-  e.preventDefault();
-  var btn=document.getElementById('narudi-btn');
-  btn.textContent='Slanje...';btn.disabled=true;
-  hide("narudi-ok");hide("narudi-err");
-  var data={
-    paket:document.getElementById('n-paket').value,
-    ime:document.getElementById('n-ime').value.trim(),
-    email:document.getElementById('n-email').value.trim(),
-    telefon:document.getElementById('n-telefon').value.trim(),
-    biznis:document.getElementById('n-biznis').value.trim(),
-    djelatnost:document.getElementById('n-djelatnost').value.trim(),
-    postojeci_web:document.getElementById('n-postojeci-web').value.trim(),
-    opis:document.getElementById('n-opis').value.trim()
-  };
-  try{var r=await sb.from("narudzba_web").insert([data]);if(r.error)throw r.error;show("narudi-ok");this.reset();selectPkg('starter');}
-  catch(ex){console.error(ex);show("narudi-err");}
-  btn.innerHTML='Po&#353;aljite narud&#382;bu &rarr;';btn.disabled=false;
-});
-
-document.getElementById("contact-form").addEventListener("submit",async function(e){
-  e.preventDefault();
-  var ime=document.getElementById("contact-ime").value.trim();
-  var email=document.getElementById("contact-email").value.trim();
-  var telefon=document.getElementById("contact-telefon").value.trim();
-  var usluga=document.getElementById("contact-usluga").value;
-  var poruka=document.getElementById("contact-poruka").value.trim();
-  hide("contact-ok");hide("contact-err");
-  try{var r=await sb.from("kontakt").insert([{ime:ime,email:email,telefon:telefon,usluga:usluga,poruka:poruka}]);if(r.error)throw r.error;show("contact-ok");document.getElementById("contact-form").reset();}
-  catch(ex){console.error(ex);show("contact-err");}
-});
-
-var chatOpen=false;
-var chatHistory=[{role:"system",content:"Ti si YOLO AI asistent za YOLO usluge, agenciju iz Pule koja izraduje AI web stranice i poslovne automatizacije. Usluge: Starter web (199EUR akcija, inace 299EUR) + 10EUR/mj hosting, Business web (399EUR akcija, inace 499EUR) + 10EUR/mj hosting, AI automatizacije, YOLOwaiter (AI konobar za restorane, dolazi uskoro), YOLOapointr (online booking, dolazi uskoro). Akcija traje do 31.3.2026. Kontakt: yolo.obrt@gmail.com. Odgovaraj kratko, prijateljski, na hrvatskom jeziku."}];
-
-function toggleChat(){
-  chatOpen=!chatOpen;
-  var box=document.getElementById('ai-chat-box');
-  if(chatOpen){box.classList.add('open');}else{box.classList.remove('open');}
+async function uploadToStorage(file, path) {
+  const { data, error } = await sb.storage.from('narudzba-assets').upload(path, file, {
+    cacheControl: '3600', upsert: true
+  });
+  if (error) throw error;
+  return data.path;
 }
 
-function appendMsg(role,text){
-  var msgs=document.getElementById('ai-chat-msgs');
-  var div=document.createElement('div');
-  div.className=role==='user'?'user-msg':'ai-msg';
-  div.textContent=text;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-}
+// =====================
+// ORDER FORM SUBMIT
+// =====================
+document.getElementById('form-narudi')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!selectedPkg) {
+    document.getElementById('n-paket-warning').style.display = 'block';
+    document.getElementById('pkg-select')?.scrollIntoView({behavior:'smooth'});
+    return;
+  }
 
-async function sendChat(){
-  var input=document.getElementById('ai-chat-input');
-  var msg=input.value.trim();
-  if(!msg)return;
-  input.value='';
-  appendMsg('user',msg);
-  chatHistory.push({role:'user',content:msg});
-  var send=document.getElementById('ai-chat-send');
-  send.disabled=true;send.textContent='...';
-  try{
-    var res=await fetch('https://api.openai.com/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+OAI_KEY},
-      body:JSON.stringify({model:'gpt-4o-mini',messages:chatHistory,max_tokens:300,temperature:0.7})
+  const firma = document.getElementById('n-firma').value.trim();
+  const ime = document.getElementById('n-ime').value.trim();
+  const email = document.getElementById('n-email').value.trim();
+  const telefon = document.getElementById('n-telefon').value.trim();
+  const djelatnost = document.getElementById('n-djelatnost').value.trim();
+  const domena = document.getElementById('n-domena').value;
+  const postojeci_web = document.getElementById('n-web').value.trim();
+  const opis = document.getElementById('n-opis').value.trim();
+  const boje = selectedBoje.length ? selectedBoje : null;
+
+  if (!firma || !ime || !email || !opis) { toast('Molimo popunite obavezna polja.', false); return; }
+
+  const btn = document.getElementById('n-btn');
+  btn.textContent = '\u0160aljem...'; btn.disabled = true;
+  document.getElementById('n-ok').style.display = 'none';
+  document.getElementById('n-err').style.display = 'none';
+
+  try {
+    let logo_url = null;
+    let slike_urls = null;
+    const userId = currentUser?.id;
+
+    if (logoFile && userId) {
+      logo_url = await uploadToStorage(logoFile, userId + '/logo_' + Date.now() + '_' + logoFile.name);
+    }
+    if (slikeFiles.length && userId) {
+      slike_urls = await Promise.all(slikeFiles.map((f, i) =>
+        uploadToStorage(f, userId + '/slika_' + Date.now() + '_' + i + '_' + f.name)
+      ));
+    }
+
+    const {error} = await sb.from('narudzba_web').insert({
+      paket: selectedPkg,
+      naziv_firme: firma,
+      ime_kontakt: ime,
+      email,
+      telefon,
+      djelatnost,
+      domena,
+      postojeci_web,
+      opis,
+      boje,
+      logo_url,
+      slike_urls,
+      user_id: userId || null
     });
-    var data=await res.json();
-    var reply=(data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||'Zao mi je, nesto je poslo naopako. Kontaktirajte nas na yolo.obrt@gmail.com';
-    chatHistory.push({role:'assistant',content:reply});
-    appendMsg('assistant',reply);
-  }catch(ex){appendMsg('assistant','Tehnicka greska. Kontaktirajte nas na yolo.obrt@gmail.com');}
-  send.disabled=false;send.innerHTML='&#10148;';
-}
+    if (error) throw error;
+
+    document.getElementById('n-ok').style.display = 'block';
+    this.reset();
+    logoFile = null; slikeFiles = []; selectedBoje = []; selectedPkg = '';
+    document.querySelectorAll('.palette-opt').forEach(o => o.style.borderColor='#333');
+    document.querySelectorAll('.pkg-option').forEach(el => { el.style.borderColor='#222'; el.classList.remove('selected'); const c=el.querySelector('.pkg-check'); if(c)c.innerHTML=''; });
+    document.getElementById('logo-placeholder').style.display = 'block';
+    document.getElementById('logo-preview').style.display = 'none';
+    document.getElementById('slike-preview').innerHTML = '';
+    toast('Narud\u017Eba primljena!', true);
+  } catch(err) {
+    console.error(err);
+    document.getElementById('n-err').style.display = 'block';
+    toast('Gre\u0161ka pri slanju.', false);
+  }
+  btn.textContent = 'Po\u0161alji narud\u017Ebu \u2192'; btn.disabled = false;
+});
+
+// =====================
+// WAITLIST FORMS
+// =====================
+document.getElementById('form-waiter').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const email=document.getElementById('waiter-email').value.trim();
+  if(!email)return;
+  const btn=this.querySelector('button');btn.textContent='Saljem...';btn.disabled=true;
+  try{const{error}=await sb.from('yolowaiter_waitlist').insert({email});if(error)throw error;document.getElementById('waiter-ok').style.display='block';this.reset();toast('Uspjesno prijavljeni!',true);}
+  catch(e){toast('Greska. Pokusaj opet.',false);}
+  btn.textContent='Na listu cekanja';btn.disabled=false;
+});
+
+document.getElementById('form-apointr').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const email=document.getElementById('apointr-email').value.trim();
+  if(!email)return;
+  const btn=this.querySelector('button');btn.textContent='Saljem...';btn.disabled=true;
+  try{const{error}=await sb.from('yoloapointr_waitlist').insert({email});if(error)throw error;document.getElementById('apointr-ok').style.display='block';this.reset();toast('Uspjesno prijavljeni!',true);}
+  catch(e){toast('Greska. Pokusaj opet.',false);}
+  btn.textContent='Early bird lista';btn.disabled=false;
+});
+
+// =====================
+// KONTAKT FORM
+// =====================
+document.getElementById('form-kontakt').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const ime=document.getElementById('k-ime').value.trim();
+  const email=document.getElementById('k-email').value.trim();
+  const telefon=document.getElementById('k-telefon').value.trim();
+  const usluga=document.getElementById('k-usluga').value;
+  const poruka=document.getElementById('k-poruka').value.trim();
+  if(!ime||!email)return;
+  const btn=document.getElementById('k-btn');btn.textContent='Saljem...';btn.disabled=true;
+  document.getElementById('k-ok').style.display='none';
+  document.getElementById('k-err').style.display='none';
+  try{const{error}=await sb.from('kontakt').insert({ime,email,telefon,usluga,poruka});if(error)throw error;document.getElementById('k-ok').style.display='block';this.reset();toast('Upit poslan!',true);}
+  catch(e){document.getElementById('k-err').style.display='block';toast('Greska pri slanju.',false);}
+  btn.textContent='Posalji upit \u2192';btn.disabled=false;
+});
+
+// =====================
+// SMOOTH SCROLL
+// =====================
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const id=this.getAttribute('href').slice(1);
+    const el=document.getElementById(id);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
 </script>
 </body>
 </html>

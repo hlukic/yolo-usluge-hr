@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" width="520" height="100">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- YOLO — crveno, bold condensed -->
+  <text x="0" y="78"
+    font-family="'Oswald', 'Arial Narrow', Impact, sans-serif"
+    font-weight="700"
+    font-size="88"
+    fill="#CC1418"
+    letter-spacing="1">YOLO</text>
+
+  <!-- EKG + Circuit ikona -->
+  <g transform="translate(238, 12)">
+    <!-- EKG linija: ravno → spike gore → spike dolje → ravno -->
+    <polyline
+      points="0,44  16,44  26,8  38,80  48,44  62,44"
+      fill="none"
+      stroke="#111111"
+      stroke-width="4.5"
+      stroke-linejoin="round"
+      stroke-linecap="round"/>
+
+    <!-- Vertikalna crvena bar -->
+    <line x1="62" y1="20" x2="62" y2="68"
+      stroke="#CC1418" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- 3 horizontalne crvene linije s otvorenim kružićima -->
+    <line x1="62" y1="22" x2="80" y2="22"
+      stroke="#CC1418" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="88" cy="22" r="7"
+      fill="none" stroke="#CC1418" stroke-width="3"/>
+
+    <line x1="62" y1="44" x2="80" y2="44"
+      stroke="#CC1418" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="88" cy="44" r="7"
+      fill="none" stroke="#CC1418" stroke-width="3"/>
+
+    <line x1="62" y1="66" x2="80" y2="66"
+      stroke="#CC1418" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="88" cy="66" r="7"
+      fill="none" stroke="#CC1418" stroke-width="3"/>
+  </g>
+
+  <!-- usluge — tamno, isti font -->
+  <text x="348" y="78"
+    font-family="'Oswald', 'Arial Narrow', Impact, sans-serif"
+    font-weight="700"
+    font-size="88"
+    fill="#111111"
+    letter-spacing="1">usluge</text>
+</svg>

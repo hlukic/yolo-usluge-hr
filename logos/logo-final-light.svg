@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="500" height="120">
+  <!-- Transparent background — za bijelu/svjetlu pozadinu -->
+
+  <!-- YOLO — bold, red -->
+  <text x="18" y="82" font-family="'Arial Black','Impact',sans-serif" font-weight="900" font-size="72" fill="#CC1418" letter-spacing="-1">YOLO</text>
+
+  <!-- EKG black stroke -->
+  <polyline
+    points="228,62  246,62  255,26  264,94  273,62  286,62"
+    fill="none" stroke="#111111" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- EKG to circuit connector -->
+  <line x1="286" y1="62" x2="296" y2="62" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- Vertical circuit bar -->
+  <line x1="296" y1="46" x2="296" y2="78" stroke="#CC1418" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Three circuit branches with circles -->
+  <line x1="296" y1="48" x2="318" y2="48" stroke="#CC1418" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="324" cy="48" r="4.5" fill="none" stroke="#CC1418" stroke-width="2.5"/>
+
+  <line x1="296" y1="62" x2="318" y2="62" stroke="#CC1418" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="324" cy="62" r="4.5" fill="none" stroke="#CC1418" stroke-width="2.5"/>
+
+  <line x1="296" y1="76" x2="318" y2="76" stroke="#CC1418" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="324" cy="76" r="4.5" fill="none" stroke="#CC1418" stroke-width="2.5"/>
+
+  <!-- usluge — bold, dark -->
+  <text x="340" y="82" font-family="'Arial Black','Impact',sans-serif" font-weight="900" font-size="72" fill="#111111" letter-spacing="-1">usluge</text>
+</svg>

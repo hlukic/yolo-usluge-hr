@@ -3,56 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YOLO usluge — Logo varijante</title>
+<title>YOLO usluge — Logo preview</title>
 <style>
   body { font-family: Arial, sans-serif; background: #1a1a1a; color: #fff; padding: 40px; }
-  h1 { color: #E63946; margin-bottom: 40px; font-size: 1.2rem; letter-spacing: 3px; text-transform: uppercase; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; }
-  .card { background: #111; border: 1px solid #222; border-radius: 16px; padding: 32px; }
-  .card:hover { border-color: #E63946; }
-  .card h2 { font-size: 0.75rem; color: #666; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; }
-  .logo-wrap { display: flex; align-items: center; justify-content: center; min-height: 120px; }
+  h1 { color: #E63946; margin-bottom: 40px; font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; }
+  .card { border: 1px solid #222; border-radius: 16px; padding: 40px 32px; }
+  .card h2 { font-size: 0.72rem; color: #555; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 28px; }
+  .dark { background: #0a0a0a; }
+  .light { background: #f0f0f0; }
   .logo-wrap img { max-width: 100%; height: auto; }
-  .variants { margin-top: 16px; display: flex; gap: 12px; justify-content: center; }
-  .badge { font-size: 0.7rem; background: rgba(230,57,70,0.15); border: 1px solid rgba(230,57,70,0.4); color: #E63946; padding: 3px 10px; border-radius: 100px; }
 </style>
 </head>
 <body>
 
-<h1>YOLO • usluge — Minimalne varijante</h1>
+<h1>YOLO usluge — Finalni logo</h1>
 
 <div class="grid">
 
-  <div class="card">
-    <h2>V1 — Isti font size, čista točka</h2>
+  <div class="card dark">
+    <h2>Tamna pozadina</h2>
     <div class="logo-wrap">
-      <img src="logo-dot-v1.svg" alt="Logo dot V1">
-    </div>
-    <div class="variants">
-      <span class="badge">Čist</span>
-      <span class="badge">Simetričan</span>
+      <img src="logo-final-dark.svg" alt="Logo dark">
     </div>
   </div>
 
-  <div class="card">
-    <h2>V2 — "usluge" prigušeno bijelo</h2>
+  <div class="card light">
+    <h2>Svijetla pozadina</h2>
     <div class="logo-wrap">
-      <img src="logo-dot-v2.svg" alt="Logo dot V2">
-    </div>
-    <div class="variants">
-      <span class="badge">Hijerarhija</span>
-      <span class="badge">Suptilan</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>V3 — Točka s glow halo efektom</h2>
-    <div class="logo-wrap">
-      <img src="logo-dot-v3.svg" alt="Logo dot V3">
-    </div>
-    <div class="variants">
-      <span class="badge">Premium</span>
-      <span class="badge">Upečatljiv</span>
+      <img src="logo-final-light.svg" alt="Logo light">
     </div>
   </div>
 

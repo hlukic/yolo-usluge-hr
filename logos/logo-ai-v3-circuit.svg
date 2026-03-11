@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 100" width="430" height="100">
+  <defs>
+    <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E63946"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="430" height="100" fill="#0a0a0a" rx="10"/>
+
+  <!-- YOLO -->
+  <text x="20" y="65" font-family="'Arial Black', sans-serif" font-weight="900" font-size="52" fill="#ffffff" letter-spacing="-2">YOLO</text>
+
+  <!-- Icon: rounded square background -->
+  <rect x="181" y="18" width="64" height="64" rx="14" fill="rgba(230,57,70,0.1)" stroke="#E63946" stroke-width="1.5"/>
+
+  <!-- Circuit/brain hybrid inside square -->
+  <!-- Center brain shape, very minimal -->
+  <path d="M204 37 C201 33, 196 34, 195 38 C193 42, 195 47, 198 49
+           C195 52, 194 57, 197 60 C200 63, 205 61, 207 59
+           L207 36 C206 36, 204 36, 204 37 Z"
+        fill="#E63946" opacity="0.9"/>
+  <path d="M216 37 C219 33, 224 34, 225 38 C227 42, 225 47, 222 49
+           C225 52, 226 57, 223 60 C220 63, 215 61, 213 59
+           L213 36 C214 36, 216 36, 216 37 Z"
+        fill="#E63946" opacity="0.9"/>
+  <!-- Center line -->
+  <line x1="210" y1="36" x2="210" y2="59" stroke="#0a0a0a" stroke-width="2"/>
+
+  <!-- Circuit lines extending out -->
+  <line x1="181" y1="44" x2="175" y2="44" stroke="#E63946" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="173" cy="44" r="2.5" fill="#E63946" opacity="0.6"/>
+
+  <line x1="181" y1="56" x2="175" y2="56" stroke="#E63946" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="173" cy="56" r="2" fill="#E63946" opacity="0.4"/>
+
+  <line x1="245" y1="44" x2="251" y2="44" stroke="#E63946" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="253" cy="44" r="2.5" fill="#E63946" opacity="0.6"/>
+
+  <line x1="245" y1="56" x2="251" y2="56" stroke="#E63946" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="253" cy="56" r="2" fill="#E63946" opacity="0.4"/>
+
+  <!-- usluge -->
+  <text x="272" y="65" font-family="'Arial Black', sans-serif" font-weight="900" font-size="52" fill="#ffffff" letter-spacing="-2">usluge</text>
+</svg>

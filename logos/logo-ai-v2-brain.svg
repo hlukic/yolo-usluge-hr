@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 100" width="440" height="100">
+  <defs>
+    <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E63946"/>
+      <stop offset="100%" style="stop-color:#C1121F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="440" height="100" fill="#0a0a0a" rx="10"/>
+
+  <!-- YOLO -->
+  <text x="20" y="65" font-family="'Arial Black', sans-serif" font-weight="900" font-size="52" fill="#ffffff" letter-spacing="-2">YOLO</text>
+
+  <!-- Brain icon — simplified stylized brain path -->
+  <!-- Left hemisphere -->
+  <path d="M195 35 C188 30, 178 30, 175 38 C172 44, 174 50, 178 54
+           C174 58, 173 65, 177 69 C181 73, 187 72, 192 69
+           C194 73, 198 75, 202 74 L202 26 C199 26, 196 30, 195 35 Z"
+        fill="none" stroke="#E63946" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Right hemisphere -->
+  <path d="M225 35 C232 30, 242 30, 245 38 C248 44, 246 50, 242 54
+           C246 58, 247 65, 243 69 C239 73, 233 72, 228 69
+           C226 73, 222 75, 218 74 L218 26 C221 26, 224 30, 225 35 Z"
+        fill="none" stroke="#E63946" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Center divider line -->
+  <line x1="210" y1="26" x2="210" y2="74" stroke="#E63946" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+  <!-- Brain fold lines left -->
+  <path d="M182 42 C185 40, 190 41, 192 44" fill="none" stroke="#E63946" stroke-width="1.2" opacity="0.6"/>
+  <path d="M180 54 C183 52, 188 53, 191 56" fill="none" stroke="#E63946" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- Brain fold lines right -->
+  <path d="M238 42 C235 40, 230 41, 228 44" fill="none" stroke="#E63946" stroke-width="1.2" opacity="0.6"/>
+  <path d="M240 54 C237 52, 232 53, 229 56" fill="none" stroke="#E63946" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- Glow dot center top -->
+  <circle cx="210" cy="50" r="3" fill="#E63946" opacity="0.7"/>
+
+  <!-- usluge -->
+  <text x="268" y="65" font-family="'Arial Black', sans-serif" font-weight="900" font-size="52" fill="#ffffff" letter-spacing="-2">usluge</text>
+</svg>

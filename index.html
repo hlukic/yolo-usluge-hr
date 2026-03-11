@@ -3,301 +3,750 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YOLO usluge &mdash; AI web stranice i automatizacije</title>
-<meta name="description" content="Profesionalne AI web stranice i poslovne automatizacije za lokalne poduzetnike.">
+<title>YOLO usluge &mdash; AI web stranice i automatizacije, Pula</title>
+<meta name="description" content="Boutique AI agencija iz Pule, Istra. Profesionalne web stranice, automatizacije i digitalni alati za lokalne poduzetnike.">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#f0f0f0}
-.grad-bg{background:linear-gradient(135deg,#E63946 0%,#C1121F 100%)}
-.grad-text{background:linear-gradient(135deg,#E63946 0%,#ff6b6b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.card{background:#141414;border:1px solid #222;border-radius:16px;transition:border-color 0.3s}
-.card:hover{border-color:#E63946}
-.btn-p{background:linear-gradient(135deg,#E63946 0%,#C1121F 100%);color:#fff;padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:opacity .2s,transform .1s;display:inline-block;text-decoration:none}
-.btn-p:hover{opacity:.9;transform:translateY(-1px)}
-.btn-o{border:2px solid #E63946;color:#E63946;padding:12px 30px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;background:transparent;transition:background .2s,color .2s;display:inline-block;text-decoration:none}
-.btn-o:hover{background:#E63946;color:#fff}
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,10,10,.95);backdrop-filter:blur(10px);border-bottom:1px solid #222}
-.stag{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#E63946}
-input,textarea,select{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:12px 16px;color:#f0f0f0;width:100%;outline:none;font-family:inherit;font-size:.95rem;box-sizing:border-box}
-input:focus,textarea:focus,select:focus{border-color:#E63946}
-.tag{background:rgba(230,57,70,.15);border:1px solid rgba(230,57,70,.4);border-radius:100px;padding:4px 14px;font-size:.8rem;color:#E63946;display:inline-block}
-.smt{scroll-margin-top:80px}
-.chk{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.75rem;color:#ccc;font-size:.9rem}
-.chki{color:#E63946;font-weight:900;flex-shrink:0;margin-top:1px}
-.toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;border:1px solid #E63946;border-radius:12px;padding:16px 24px;z-index:9999;display:none;color:#f0f0f0;box-shadow:0 8px 32px rgba(0,0,0,.5)}
-.toast.show{display:block;animation:sIn .3s ease}
-@keyframes sIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.price{border:2px solid #222;border-radius:20px;padding:2rem;background:#141414}
-.price.feat{border-color:#E63946;background:linear-gradient(180deg,rgba(230,57,70,.08) 0%,#141414 100%)}
-hr.div{border:none;height:1px;background:linear-gradient(90deg,transparent,#333,transparent);margin:80px 0}
-.pkg-option{border:2px solid #222;border-radius:16px;padding:1.5rem;background:#141414;cursor:pointer;transition:border-color .2s,background .2s}
-.pkg-option:hover{border-color:#E63946}
-.pkg-option.selected{border-color:#E63946;background:rgba(230,57,70,.08)}
+  :root {
+    --red: #E63946;
+    --red-dark: #C1121F;
+    --red-dim: rgba(230,57,70,0.12);
+    --red-border: rgba(230,57,70,0.35);
+    --dark: #0a0a0a;
+    --dark2: #111827;
+    --card-bg: #141414;
+    --card-border: #1e1e1e;
+    --light: #f9fafb;
+    --light2: #f1f5f9;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--dark);
+    color: #f0f0f0;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* ---- Gradients & text ---- */
+  .grad-bg { background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%); }
+  .grad-text {
+    background: linear-gradient(135deg, #E63946 0%, #ff6b6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .grad-text-warm {
+    background: linear-gradient(135deg, #ff6b6b 0%, #E63946 50%, #c1121f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ---- Buttons ---- */
+  .btn-p {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: opacity .2s, transform .15s, box-shadow .2s;
+    display: inline-block;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    box-shadow: 0 4px 20px rgba(230,57,70,0.25);
+  }
+  .btn-p:hover { opacity: .92; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(230,57,70,0.4); }
+
+  .btn-o {
+    border: 2px solid var(--red);
+    color: var(--red);
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    background: transparent;
+    transition: background .2s, color .2s, transform .15s;
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .btn-o:hover { background: var(--red); color: #fff; transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: #9ca3af;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid #2a2a2a;
+    transition: color .2s, border-color .2s;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { color: #fff; border-color: #555; }
+
+  /* ---- Nav ---- */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    background: rgba(20,20,20,0.8);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    backdrop-filter: blur(10px);
+  }
+  .card:hover { border-color: var(--red-border); box-shadow: 0 8px 40px rgba(230,57,70,0.08); transform: translateY(-2px); }
+
+  .card-glass {
+    background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+  }
+
+  /* ---- Section variants ---- */
+  .section-dark { background: var(--dark); }
+  .section-deep { background: var(--dark2); }
+  .section-light {
+    background: var(--light);
+    color: #0f172a;
+  }
+  .section-light h2, .section-light h3 { color: #0f172a; }
+  .section-light p { color: #475569; }
+  .section-light .stag { color: var(--red); }
+
+  /* ---- Typography ---- */
+  .stag {
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .tag {
+    background: var(--red-dim);
+    border: 1px solid var(--red-border);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: .8rem;
+    color: var(--red);
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  /* ---- Forms ---- */
+  input, textarea, select {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 13px 16px;
+    color: #f0f0f0;
+    width: 100%;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: .95rem;
+    box-sizing: border-box;
+    transition: border-color .2s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,0.1); }
+
+  /* ---- Utility ---- */
+  .smt { scroll-margin-top: 80px; }
+
+  .chk {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    margin-bottom: .75rem;
+    color: #94a3b8;
+    font-size: .9rem;
+  }
+  .chki { color: var(--red); font-weight: 900; flex-shrink: 0; margin-top: 1px; }
+
+  .section-light .chk { color: #475569; }
+
+  /* ---- Toast ---- */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: #1a1a1a;
+    border: 1px solid var(--red);
+    border-radius: 14px;
+    padding: 16px 24px;
+    z-index: 9999;
+    display: none;
+    color: #f0f0f0;
+    box-shadow: 0 8px 32px rgba(0,0,0,.6);
+    font-family: 'Inter', sans-serif;
+  }
+  .toast.show { display: block; animation: sIn .3s ease; }
+  @keyframes sIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* ---- Price cards ---- */
+  .price {
+    border: 1.5px solid #222;
+    border-radius: 20px;
+    padding: 2rem;
+    background: rgba(20,20,20,0.9);
+    transition: border-color .3s, transform .2s, box-shadow .3s;
+  }
+  .price:hover { border-color: var(--red-border); transform: translateY(-2px); box-shadow: 0 8px 40px rgba(230,57,70,0.08); }
+  .price.feat {
+    border-color: var(--red);
+    background: linear-gradient(180deg, rgba(230,57,70,.08) 0%, rgba(20,20,20,0.95) 100%);
+    box-shadow: 0 4px 32px rgba(230,57,70,0.12);
+  }
+
+  /* ---- Package selector ---- */
+  .pkg-option {
+    border: 2px solid #222;
+    border-radius: 16px;
+    padding: 1.5rem;
+    background: #141414;
+    cursor: pointer;
+    transition: border-color .2s, background .2s, transform .15s;
+  }
+  .pkg-option:hover { border-color: var(--red-border); transform: translateY(-1px); }
+  .pkg-option.selected { border-color: var(--red); background: var(--red-dim); }
+
+  /* ---- Divider ---- */
+  hr.div {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #1e1e1e, transparent);
+    margin: 0;
+  }
+
+  /* ---- Hero pattern ---- */
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image:
+      linear-gradient(rgba(230,57,70,0.6) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(230,57,70,0.6) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(230,57,70,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ---- Why YOLO section ---- */
+  .why-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: background .3s, border-color .3s, transform .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .why-card:hover { background: rgba(230,57,70,0.04); border-color: var(--red-border); transform: translateY(-3px); }
+  .why-card:hover::before { opacity: 1; }
+
+  /* ---- CTA section ---- */
+  .cta-section {
+    background: linear-gradient(135deg, #1a0608 0%, #0a0a0a 40%, #1a0608 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(230,57,70,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ---- Stat strip ---- */
+  .stat-strip {
+    background: linear-gradient(135deg, rgba(230,57,70,0.08) 0%, rgba(193,18,31,0.06) 100%);
+    border: 1px solid rgba(230,57,70,0.15);
+    border-radius: 20px;
+  }
+
+  /* ---- Step numbers ---- */
+  .step-num {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(230,57,70,0.3);
+  }
+
+  /* ---- Nav mobile ---- */
+  #mobile-menu { display: none; }
+  #mobile-menu.open { display: block; }
+
+  /* ---- Section light overrides for forms ---- */
+  .section-light input, .section-light textarea, .section-light select {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    color: #0f172a;
+  }
+  .section-light input:focus, .section-light textarea:focus, .section-light select:focus {
+    border-color: var(--red);
+  }
+  .section-light input::placeholder, .section-light textarea::placeholder { color: #94a3b8; }
+
+  /* ---- Accent pill ---- */
+  .location-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 6px 16px 6px 10px;
+    font-size: .82rem;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+  .location-dot {
+    width: 8px; height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--red);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* ---- Feature icon box ---- */
+  .icon-box {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: var(--red-dim);
+    border: 1px solid var(--red-border);
+    flex-shrink: 0;
+  }
+
+  /* ---- Floating label for light sections ---- */
+  .section-light label { color: #374151; }
+
+  /* ---- Booking mockup ---- */
+  .booking-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    transition: background .2s;
+  }
+  .booking-item:hover { background: rgba(255,255,255,0.07); }
 </style>
 </head>
 <body>
 
 <!-- AUTH MODAL -->
-<div id="auth-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:2000;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#111;border:1px solid #222;border-radius:20px;width:100%;max-width:420px;overflow:hidden">
-    <!-- Tabs -->
-    <div style="display:flex;border-bottom:1px solid #222">
-      <button id="tab-reg" onclick="switchTab('reg')" style="flex:1;padding:16px;background:transparent;border:none;color:#fff;font-weight:700;cursor:pointer;border-bottom:2px solid #E63946">Registracija</button>
-      <button id="tab-login" onclick="switchTab('login')" style="flex:1;padding:16px;background:transparent;border:none;color:#666;font-weight:700;cursor:pointer;border-bottom:2px solid transparent">Prijava</button>
+<div id="auth-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)">
+  <div style="background:#111;border:1px solid #222;border-radius:24px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.8)">
+    <div style="display:flex;border-bottom:1px solid #1e1e1e">
+      <button id="tab-reg" onclick="switchTab('reg')" style="flex:1;padding:18px;background:transparent;border:none;color:#fff;font-weight:800;cursor:pointer;border-bottom:2px solid #E63946;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem">Registracija</button>
+      <button id="tab-login" onclick="switchTab('login')" style="flex:1;padding:18px;background:transparent;border:none;color:#555;font-weight:800;cursor:pointer;border-bottom:2px solid transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem">Prijava</button>
     </div>
-
-    <!-- Register form -->
-    <div id="form-reg" style="padding:24px;display:flex;flex-direction:column;gap:12px">
+    <div id="form-reg" style="padding:28px;display:flex;flex-direction:column;gap:12px">
       <input type="text" id="r-ime" placeholder="Va&#353;e ime i prezime *" required>
       <input type="text" id="r-firma" placeholder="Naziv firme / obrta">
       <input type="tel" id="r-tel" placeholder="Telefon">
       <input type="email" id="r-email" placeholder="Email *" required>
       <input type="password" id="r-pass" placeholder="Lozinka (min. 6 znakova) *" required>
-      <button onclick="doRegister()" class="btn-p" style="width:100%;margin-top:4px">Kreiraj ra&#269;un &rarr;</button>
+      <button onclick="doRegister()" class="btn-p" style="width:100%;margin-top:4px;text-align:center">Kreiraj ra&#269;un &rarr;</button>
       <div id="r-err" style="display:none;color:#ef4444;font-size:.82rem;text-align:center"></div>
     </div>
-
-    <!-- Login form -->
-    <div id="form-login" style="padding:24px;display:none;flex-direction:column;gap:12px">
+    <div id="form-login" style="padding:28px;display:none;flex-direction:column;gap:12px">
       <input type="email" id="l-email" placeholder="Email *" required>
       <input type="password" id="l-pass" placeholder="Lozinka *" required>
-      <button onclick="doLogin()" class="btn-p" style="width:100%;margin-top:4px">Prijavi se &rarr;</button>
+      <button onclick="doLogin()" class="btn-p" style="width:100%;margin-top:4px;text-align:center">Prijavi se &rarr;</button>
       <div id="l-err" style="display:none;color:#ef4444;font-size:.82rem;text-align:center"></div>
     </div>
-
-    <div style="padding:0 24px 16px;text-align:center">
-      <button onclick="closeAuthModal()" style="background:transparent;border:none;color:#666;cursor:pointer;font-size:.85rem">Zatvori</button>
+    <div style="padding:0 28px 20px;text-align:center">
+      <button onclick="closeAuthModal()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:.85rem;font-family:'Inter',sans-serif">Zatvori</button>
     </div>
   </div>
 </div>
 
+<!-- NAV -->
 <nav class="nav">
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="#" class="font-black text-xl tracking-tight"><span class="grad-text">YOLO</span><span class="text-white"> usluge</span></a>
-    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+    <a href="#" style="text-decoration:none" class="flex items-center gap-2">
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:1.25rem;letter-spacing:-.02em">
+        <span class="grad-text">YOLO</span><span class="text-white"> usluge</span>
+      </span>
+    </a>
+    <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-400">
       <a href="#web" class="hover:text-white transition-colors">AI Web</a>
       <a href="#automatizacije" class="hover:text-white transition-colors">Automatizacije</a>
       <a href="#yolowaiter" class="hover:text-white transition-colors">YOLOwaiter</a>
       <a href="#yoloapointr" class="hover:text-white transition-colors">YOLOapointr</a>
+      <a href="#kontakt" class="hover:text-white transition-colors">Kontakt</a>
     </div>
     <div class="flex items-center gap-3">
-      <a href="#kontakt" class="hover:text-white transition-colors hidden md:block" style="font-size:.9rem;color:#9ca3af;text-decoration:none">Kontakt</a>
       <div id="nav-auth" class="flex items-center gap-3"></div>
+      <button class="md:hidden text-gray-400 hover:text-white" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobile-menu" style="border-top:1px solid #1a1a1a">
+    <div class="px-6 py-4 flex flex-col gap-4 text-sm font-medium text-gray-400">
+      <a href="#web" class="hover:text-white transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open')">AI Web stranice</a>
+      <a href="#automatizacije" class="hover:text-white transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open')">AI Automatizacije</a>
+      <a href="#yolowaiter" class="hover:text-white transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open')">YOLOwaiter</a>
+      <a href="#yoloapointr" class="hover:text-white transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open')">YOLOapointr</a>
+      <a href="#kontakt" class="btn-p text-center" onclick="document.getElementById('mobile-menu').classList.remove('open')" style="padding:12px 20px;font-size:.9rem">Kontaktiraj nas</a>
     </div>
   </div>
 </nav>
 
-<section class="pt-32 pb-20 px-6">
-  <div class="max-w-6xl mx-auto text-center">
-    <div class="tag mb-6">Pula, Hrvatska &mdash; AI usluge za lokalne poduzetnike</div>
-    <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6">
-      Tvoj biznis.<br><span class="grad-text">AI ubrzanje.</span>
-    </h1>
-    <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
-      Profesionalne AI web stranice i pametne automatizacije koje rade dok ti spava&#353;. Bez tehni&#269;kog znanja, bez kompliciranja.
-    </p>
-    <div class="flex flex-wrap gap-4 justify-center">
-      <a href="#web" class="btn-p">Pogledaj usluge</a>
-      <a href="#kontakt" class="btn-o">Zatraži ponudu</a>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-      <div class="card p-6"><div class="text-4xl font-black grad-text">48h</div><div class="text-sm text-gray-500 mt-1">isporuka web stranice</div></div>
-      <div class="card p-6"><div class="text-4xl font-black grad-text">100+</div><div class="text-sm text-gray-500 mt-1">automatiziranih procesa</div></div>
-      <div class="card p-6"><div class="text-4xl font-black grad-text">0</div><div class="text-sm text-gray-500 mt-1">tehni&#269;kog znanja potrebno</div></div>
-      <div class="card p-6"><div class="text-4xl font-black grad-text">24/7</div><div class="text-sm text-gray-500 mt-1">AI radi za tebe</div></div>
+<!-- HERO -->
+<section class="relative overflow-hidden section-dark" style="min-height:100vh;display:flex;align-items:center;padding-top:80px">
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="max-w-6xl mx-auto px-6 py-24 w-full relative z-10">
+    <div class="text-center max-w-4xl mx-auto">
+
+      <!-- Location pill -->
+      <div class="flex justify-center mb-8">
+        <div class="location-pill">
+          <div class="location-dot"></div>
+          Pula, Istra &mdash; lokalna AI agencija
+        </div>
+      </div>
+
+      <!-- Headline -->
+      <h1 style="font-size:clamp(2.8rem,8vw,5.5rem);line-height:1.05;font-weight:900;letter-spacing:-.03em;margin-bottom:1.5rem">
+        Tvoj biznis,<br>
+        <span class="grad-text-warm">digitalno ubrzan.</span>
+      </h1>
+
+      <p style="font-size:clamp(1.05rem,2.5vw,1.25rem);color:#9ca3af;max-width:580px;margin:0 auto 2.5rem;line-height:1.65">
+        AI web stranice, pametne automatizacije i digitalni alati koji rade dok ti odmaras.
+        Bez tehnickog znanja &mdash; samo rezultati.
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center mb-16">
+        <a href="#web" class="btn-p">Pogledaj usluge</a>
+        <a href="#kontakt" class="btn-o">Zatrazi besplatni razgovor</a>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="stat-strip p-6 md:p-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          <div class="text-center">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:2.4rem;font-weight:900;line-height:1" class="grad-text">48h</div>
+            <div style="font-size:.82rem;color:#6b7280;margin-top:6px;font-weight:500">isporuka web stranice</div>
+          </div>
+          <div class="text-center">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:2.4rem;font-weight:900;line-height:1" class="grad-text">100+</div>
+            <div style="font-size:.82rem;color:#6b7280;margin-top:6px;font-weight:500">automatiziranih procesa</div>
+          </div>
+          <div class="text-center">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:2.4rem;font-weight:900;line-height:1" class="grad-text">0</div>
+            <div style="font-size:.82rem;color:#6b7280;margin-top:6px;font-weight:500">tehnickog znanja potrebno</div>
+          </div>
+          <div class="text-center">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:2.4rem;font-weight:900;line-height:1" class="grad-text">24/7</div>
+            <div style="font-size:.82rem;color:#6b7280;margin-top:6px;font-weight:500">AI radi za tebe</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<hr class="div">
-
-<section id="web" class="py-20 px-6 smt">
+<!-- WHY YOLO section (light) -->
+<section class="section-light py-20 px-6">
   <div class="max-w-6xl mx-auto">
-    <div class="stag mb-4">Usluga 01</div>
-    <div class="flex flex-col md:flex-row gap-12 items-start">
+    <div class="text-center mb-14">
+      <div class="stag mb-3">Zasto YOLO?</div>
+      <h2 style="font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.025em;color:#0f172a;line-height:1.1">
+        Lokalni tim koji razumije<br>
+        <span class="grad-text">istarski biznis</span>
+      </h2>
+      <p style="color:#64748b;max-width:540px;margin:1rem auto 0;font-size:1.05rem;line-height:1.6">
+        Nismo anonimna agencija s nekog marketplace-a. Nalazimo se u Puli, dostupni smo na telefon i radimo s tobom direktno.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="why-card" style="background:rgba(15,23,42,0.03);border:1px solid #e2e8f0">
+        <div style="font-size:2rem;margin-bottom:1rem">&#127959;&#65039;</div>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:.6rem">Lokalni &amp; dostupni</h3>
+        <p style="color:#64748b;font-size:.9rem;line-height:1.6">Pula, Istra. Mozemo se naći na kavi i pokazati ti zivo kako sve funkcionira.</p>
+      </div>
+      <div class="why-card" style="background:rgba(15,23,42,0.03);border:1px solid #e2e8f0">
+        <div style="font-size:2rem;margin-bottom:1rem">&#9889;</div>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:.6rem">AI brzina isporuke</h3>
+        <p style="color:#64748b;font-size:.9rem;line-height:1.6">Koristimo najnovije AI alate koji ubrzavaju produkciju 10x &mdash; sto znaci nizu cijenu za tebe.</p>
+      </div>
+      <div class="why-card" style="background:rgba(15,23,42,0.03);border:1px solid #e2e8f0">
+        <div style="font-size:2rem;margin-bottom:1rem">&#128200;</div>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:.6rem">Mjerljivi rezultati</h3>
+        <p style="color:#64748b;font-size:.9rem;line-height:1.6">Svaka stranica i automatizacija gradena je s ciljem &mdash; vise upita, manje rucnog posla, veci prihodi.</p>
+      </div>
+      <div class="why-card" style="background:rgba(15,23,42,0.03);border:1px solid #e2e8f0">
+        <div style="font-size:2rem;margin-bottom:1rem">&#129309;</div>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:.6rem">Dugorocna podrska</h3>
+        <p style="color:#64748b;font-size:.9rem;line-height:1.6">Nismo projektni freelanceri koji nestanu. Tvoj digitalni partner koji raste s tobom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI WEB SECTION -->
+<section id="web" class="section-deep py-24 px-6 smt">
+  <div class="max-w-6xl mx-auto">
+    <div class="stag mb-3">Usluga 01</div>
+    <div class="flex flex-col md:flex-row gap-16 items-start">
+
+      <!-- Left: Info -->
       <div class="md:w-1/2">
-        <h2 class="text-4xl md:text-5xl font-black mb-6">AI izrada<br><span class="grad-text">web stranica</span></h2>
-        <p class="text-gray-400 text-lg mb-6">Moderna, brza i profesionalna web stranica za tvoj biznis u roku od 48 sati. Koristimo AI alate koji su ubrzali produkciju 10x, a u&#353;tedine prenosimo tebi.</p>
-        <p class="text-gray-400 mb-8">Stranica &#263;e biti optimizirana za Google (SEO), prilagodena mobilnim uredajima i spojena s formama za prikupljanje upita.</p>
+        <h2 style="font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.025em;line-height:1.1;margin-bottom:1.25rem">
+          AI izrada<br><span class="grad-text">web stranica</span>
+        </h2>
+        <p style="color:#94a3b8;font-size:1.05rem;line-height:1.65;margin-bottom:1.25rem">
+          Moderna, brza i profesionalna web stranica za tvoj biznis u roku od 48 sati. Koristimo AI alate koji su ubrzali produkciju 10x, a ustedine prenosimo tebi.
+        </p>
+        <p style="color:#6b7280;line-height:1.65;margin-bottom:2rem">
+          Stranica ce biti optimizirana za Google (SEO), prilagodena mobilnim uredajima i spojena s formama za prikupljanje upita.
+        </p>
         <div class="space-y-2 mb-8">
           <div class="chk"><span class="chki">&#10003;</span> Dizajn prilagoden tvojoj brandsи</div>
           <div class="chk"><span class="chki">&#10003;</span> SEO optimizacija od prvog dana</div>
           <div class="chk"><span class="chki">&#10003;</span> Forme za prikupljanje upita</div>
-          <div class="chk"><span class="chki">&#10003;</span> Mobilni prvo &mdash; savr&#353;eno na svakom uredaju</div>
+          <div class="chk"><span class="chki">&#10003;</span> Mobilni prvo &mdash; savrseno na svakom uredaju</div>
           <div class="chk"><span class="chki">&#10003;</span> Hosting postavljen i konfiguriran</div>
           <div class="chk"><span class="chki">&#10003;</span> Isporuka u 48 sati</div>
         </div>
-        <a href="#narudi-web" class="btn-p">Naru&#269;i web stranicu</a>
+        <a href="#narudi-web" class="btn-p">Naruci web stranicu</a>
       </div>
-      <div class="md:w-1/2 flex flex-col gap-4">
+
+      <!-- Right: Pricing -->
+      <div class="md:w-1/2 flex flex-col gap-5">
         <div class="price">
-          <div class="text-sm text-gray-500 mb-1">Starter</div>
-          <div class="text-3xl font-black mb-1">250 &euro;</div>
-          <div class="text-sm text-gray-500 mb-4">jednokratno + 15&euro;/mj hosting</div>
+          <div style="color:#6b7280;font-size:.85rem;font-weight:600;margin-bottom:.5rem;font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.08em">Starter</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:2.5rem;font-weight:900;line-height:1;margin-bottom:.4rem" class="grad-text">250 &euro;</div>
+          <div style="color:#6b7280;font-size:.85rem;margin-bottom:1.5rem">jednokratno + 15&euro;/mj hosting</div>
           <div class="chk"><span class="chki">&#10003;</span> Landing page do 5 sekcija</div>
           <div class="chk"><span class="chki">&#10003;</span> Kontakt forma</div>
           <div class="chk"><span class="chki">&#10003;</span> Mobilni dizajn</div>
           <div class="chk"><span class="chki">&#10003;</span> Isporuka 48h</div>
         </div>
         <div class="price feat">
-          <div class="flex items-center gap-2 mb-1">
-            <div class="text-sm text-gray-500">Business</div>
-            <span class="tag text-xs">Najpopularnije</span>
+          <div class="flex items-center gap-3 mb-2">
+            <div style="color:#9ca3af;font-size:.85rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.08em">Business</div>
+            <span class="tag" style="font-size:.72rem">Najpopularnije</span>
           </div>
-          <div class="text-3xl font-black mb-1">490 &euro;</div>
-          <div class="text-sm text-gray-500 mb-4">jednokratno + 15&euro;/mj hosting</div>
-          <div class="chk"><span class="chki">&#10003;</span> Vi&#353;estrani&#269;na web stranica</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:2.5rem;font-weight:900;line-height:1;margin-bottom:.4rem" class="grad-text">490 &euro;</div>
+          <div style="color:#6b7280;font-size:.85rem;margin-bottom:1.5rem">jednokratno + 15&euro;/mj hosting</div>
+          <div class="chk"><span class="chki">&#10003;</span> Visestраnicna web stranica</div>
           <div class="chk"><span class="chki">&#10003;</span> Blog ili galerija</div>
           <div class="chk"><span class="chki">&#10003;</span> Google Analytics</div>
           <div class="chk"><span class="chki">&#10003;</span> Rezervacije i booking forme</div>
-          <div class="chk"><span class="chki">&#10003;</span> 1 mjesec besplatne podr&#353;ke</div>
+          <div class="chk"><span class="chki">&#10003;</span> 1 mjesec besplatne podrske</div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
 <hr class="div">
 
-<!-- NARUDI WEB SECTION -->
-<section id="narudi-web" class="py-20 px-6 smt">
+<!-- ORDER FORM (dark) -->
+<section id="narudi-web" class="section-dark py-20 px-6 smt">
   <div class="max-w-3xl mx-auto">
-    <div class="stag mb-4">Narudžba</div>
-    <h2 class="text-4xl md:text-5xl font-black mb-4">Naru&#269;i web<br><span class="grad-text">stranicu</span></h2>
-    <p class="text-gray-400 text-lg mb-10">Ispuni obrazac i kontaktirat &#263;emo te u roku 24h s potvrdom i uputama za pla&#263;anje.</p>
+    <div class="stag mb-3">Narudzba</div>
+    <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-.025em;line-height:1.1;margin-bottom:.75rem">
+      Naruci web<br><span class="grad-text">stranicu</span>
+    </h2>
+    <p style="color:#94a3b8;font-size:1.05rem;margin-bottom:2.5rem;line-height:1.6">Ispuni obrazac i kontaktirat cemo te u roku 24h s potvrdom i uputama za placanje.</p>
 
     <!-- Package selection -->
     <div id="pkg-select" class="mb-8">
-      <div class="text-sm text-gray-400 mb-4 font-medium">1. Odaberi paket *</div>
+      <div style="font-size:.85rem;color:#94a3b8;margin-bottom:1rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif">1. Odaberi paket *</div>
       <div class="grid md:grid-cols-2 gap-4">
         <div class="pkg-option" id="pkg-starter" onclick="selectPkg('Starter - 250€')">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div class="font-bold text-lg">Starter</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem">Starter</div>
             <div class="pkg-check" style="width:24px;height:24px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#E63946;font-weight:900"></div>
           </div>
-          <div class="text-2xl font-black grad-text mb-1">250 &euro;</div>
-          <div class="text-xs text-gray-500 mb-3">+ 15&euro;/mj hosting</div>
-          <div style="font-size:.8rem;color:#888">Landing page do 5 sekcija, kontakt forma, mobilni dizajn, isporuka 48h</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:900;line-height:1;margin-bottom:.3rem" class="grad-text">250 &euro;</div>
+          <div style="font-size:.8rem;color:#6b7280;margin-bottom:.75rem">+ 15&euro;/mj hosting</div>
+          <div style="font-size:.82rem;color:#6b7280">Landing page do 5 sekcija, kontakt forma, mobilni dizajn, isporuka 48h</div>
         </div>
         <div class="pkg-option" id="pkg-business" onclick="selectPkg('Business - 490€')">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div class="font-bold text-lg">Business <span class="tag text-xs ml-1">Popular</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem">Business <span class="tag" style="font-size:.7rem;margin-left:6px">Popular</span></div>
             <div class="pkg-check" style="width:24px;height:24px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#E63946;font-weight:900"></div>
           </div>
-          <div class="text-2xl font-black grad-text mb-1">490 &euro;</div>
-          <div class="text-xs text-gray-500 mb-3">+ 15&euro;/mj hosting</div>
-          <div style="font-size:.8rem;color:#888">Vi&#353;estrani&#269;na, blog/galerija, Analytics, booking, 1mj podr&#353;ke</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:900;line-height:1;margin-bottom:.3rem" class="grad-text">490 &euro;</div>
+          <div style="font-size:.8rem;color:#6b7280;margin-bottom:.75rem">+ 15&euro;/mj hosting</div>
+          <div style="font-size:.82rem;color:#6b7280">Visestраnicna, blog/galerija, Analytics, booking, 1mj podrske</div>
         </div>
       </div>
     </div>
 
     <!-- Login gate -->
-    <div id="narudi-gate" style="display:none;text-align:center;padding:48px 24px;background:#141414;border:1px solid #222;border-radius:16px;margin-top:16px">
-      <div style="font-size:2rem;margin-bottom:12px">&#128272;</div>
-      <div style="font-size:1.1rem;font-weight:700;margin-bottom:8px">Prijavite se za nastavak</div>
-      <div style="color:#888;font-size:.9rem;margin-bottom:20px">Kreirajte besplatan ra&#269;un kako bismo mogli pratiti va&#353;u narud&#382;bu.</div>
+    <div id="narudi-gate" style="display:none;text-align:center;padding:52px 24px;background:rgba(20,20,20,0.8);border:1px solid #222;border-radius:20px;margin-top:16px">
+      <div style="font-size:2.2rem;margin-bottom:14px">&#128272;</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:8px">Prijavite se za nastavak</div>
+      <div style="color:#6b7280;font-size:.9rem;margin-bottom:24px;max-width:300px;margin-left:auto;margin-right:auto;line-height:1.5">Kreirajte besplatan racun kako bismo mogli pratiti vasu narudzbu.</div>
       <button onclick="openAuthModal()" class="btn-p">Registracija / Prijava</button>
     </div>
 
-    <!-- Actual form (shown when logged in) -->
+    <!-- Actual form -->
     <div id="narudi-form-wrap" style="display:none">
     <form id="form-narudi" class="card p-8">
-
       <div class="grid md:grid-cols-2 gap-4 mb-4">
         <div>
-          <label class="block text-sm text-gray-400 mb-2">Naziv firme / obrta *</label>
+          <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Naziv firme / obrta *</label>
           <input type="text" id="n-firma" placeholder="Frizerski salon Ana" required>
         </div>
         <div>
-          <label class="block text-sm text-gray-400 mb-2">Va&#353;e ime *</label>
-          <input type="text" id="n-ime" placeholder="Ana Ani&#263;" required>
+          <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Vase ime *</label>
+          <input type="text" id="n-ime" placeholder="Ana Anic" required>
         </div>
       </div>
       <div class="grid md:grid-cols-2 gap-4 mb-4">
         <div>
-          <label class="block text-sm text-gray-400 mb-2">Email *</label>
+          <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Email *</label>
           <input type="email" id="n-email" placeholder="ana@salon.hr" required>
         </div>
         <div>
-          <label class="block text-sm text-gray-400 mb-2">Telefon</label>
+          <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Telefon</label>
           <input type="tel" id="n-telefon" placeholder="+385 91 ...">
         </div>
       </div>
       <div class="mb-4">
-        <label class="block text-sm text-gray-400 mb-2">Djelatnost</label>
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Djelatnost</label>
         <input type="text" id="n-djelatnost" placeholder="Frizerski salon, restoran, ordinacija...">
       </div>
       <div class="mb-4">
-        <label class="block text-sm text-gray-400 mb-2">Imate li domenu (.hr, .com...)?</label>
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Imate li domenu (.hr, .com...)?</label>
         <select id="n-domena">
           <option value="da">Da, imam domenu</option>
           <option value="ne">Ne, trebam novu domenu</option>
-          <option value="pomoc">Nisam siguran/a, trebam pomo&#263;</option>
+          <option value="pomoc">Nisam siguran/a, trebam pomoc</option>
         </select>
       </div>
       <div class="mb-4">
-        <label class="block text-sm text-gray-400 mb-2">URL postoje&#263;e web stranice (ako imate)</label>
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">URL postojece web stranice (ako imate)</label>
         <input type="url" id="n-web" placeholder="https://www.vasafirma.hr">
       </div>
 
       <!-- COLOR PICKER -->
       <div class="mb-6">
-        <label class="block text-sm text-gray-400 mb-3">Odaberite stil/boje koje vam se svi&#273;aju</label>
+        <label class="block text-sm mb-3" style="color:#9ca3af;font-weight:500">Odaberite stil/boje koje vam se svidaju</label>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px" id="palette-grid">
-          <div class="palette-opt" data-boje='["#0a0a0a","#ffffff","#E63946"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+          <div class="palette-opt" data-boje='["#0a0a0a","#ffffff","#E63946"]' onclick="selectPalette(this)" style="border:2px solid #2a2a2a;border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:border-color .2s">
             <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
               <div style="width:20px;height:20px;border-radius:50%;background:#0a0a0a;border:1px solid #555"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#fff;border:1px solid #333"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#E63946"></div>
             </div>
-            <div style="font-size:.75rem;color:#888">Tamno + Crveno</div>
+            <div style="font-size:.75rem;color:#6b7280">Tamno + Crveno</div>
           </div>
-          <div class="palette-opt" data-boje='["#f8f9fa","#212529","#2d6a4f"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+          <div class="palette-opt" data-boje='["#f8f9fa","#212529","#2d6a4f"]' onclick="selectPalette(this)" style="border:2px solid #2a2a2a;border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:border-color .2s">
             <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
               <div style="width:20px;height:20px;border-radius:50%;background:#f8f9fa;border:1px solid #333"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#212529"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#2d6a4f"></div>
             </div>
-            <div style="font-size:.75rem;color:#888">Svje&#382;e Zeleno</div>
+            <div style="font-size:.75rem;color:#6b7280">Svjeze Zeleno</div>
           </div>
-          <div class="palette-opt" data-boje='["#fff8f0","#1a1a1a","#f4845f"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+          <div class="palette-opt" data-boje='["#fff8f0","#1a1a1a","#f4845f"]' onclick="selectPalette(this)" style="border:2px solid #2a2a2a;border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:border-color .2s">
             <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
               <div style="width:20px;height:20px;border-radius:50%;background:#fff8f0;border:1px solid #333"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#1a1a1a"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#f4845f"></div>
             </div>
-            <div style="font-size:.75rem;color:#888">Toplo Naran&#269;asto</div>
+            <div style="font-size:.75rem;color:#6b7280">Toplo Narancasto</div>
           </div>
-          <div class="palette-opt" data-boje='["#f0f4ff","#1a1a2e","#4361ee"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+          <div class="palette-opt" data-boje='["#f0f4ff","#1a1a2e","#4361ee"]' onclick="selectPalette(this)" style="border:2px solid #2a2a2a;border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:border-color .2s">
             <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
               <div style="width:20px;height:20px;border-radius:50%;background:#f0f4ff;border:1px solid #333"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#1a1a2e"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#4361ee"></div>
             </div>
-            <div style="font-size:.75rem;color:#888">Plavo Profesionalno</div>
+            <div style="font-size:.75rem;color:#6b7280">Plavo Profesionalno</div>
           </div>
-          <div class="palette-opt" data-boje='["#fff0f6","#2d1b2e","#c77dff"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+          <div class="palette-opt" data-boje='["#fff0f6","#2d1b2e","#c77dff"]' onclick="selectPalette(this)" style="border:2px solid #2a2a2a;border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:border-color .2s">
             <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
               <div style="width:20px;height:20px;border-radius:50%;background:#fff0f6;border:1px solid #333"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#2d1b2e"></div>
               <div style="width:20px;height:20px;border-radius:50%;background:#c77dff"></div>
             </div>
-            <div style="font-size:.75rem;color:#888">Ljubi&#269;asto / Female</div>
+            <div style="font-size:.75rem;color:#6b7280">Ljubicasto / Female</div>
           </div>
-          <div class="palette-opt" data-boje='["custom"]' onclick="selectPalette(this)" style="border:2px solid #333;border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s">
+          <div class="palette-opt" data-boje='["custom"]' onclick="selectPalette(this)" style="border:2px solid #2a2a2a;border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:border-color .2s">
             <div style="font-size:1.5rem;margin-bottom:4px">&#127912;</div>
-            <div style="font-size:.75rem;color:#888">Vlastite boje</div>
+            <div style="font-size:.75rem;color:#6b7280">Vlastite boje</div>
           </div>
         </div>
-        <!-- Custom color inputs -->
         <div id="custom-colors" style="display:none;gap:8px;flex-wrap:wrap;align-items:center">
-          <label style="font-size:.82rem;color:#888">Pozadina:</label>
+          <label style="font-size:.82rem;color:#6b7280">Pozadina:</label>
           <input type="color" id="boja-bg" value="#ffffff" style="width:40px;height:32px;padding:2px;border-radius:6px;cursor:pointer">
-          <label style="font-size:.82rem;color:#888">Tekst:</label>
+          <label style="font-size:.82rem;color:#6b7280">Tekst:</label>
           <input type="color" id="boja-text" value="#1a1a1a" style="width:40px;height:32px;padding:2px;border-radius:6px;cursor:pointer">
-          <label style="font-size:.82rem;color:#888">Naglasak:</label>
+          <label style="font-size:.82rem;color:#6b7280">Naglasak:</label>
           <input type="color" id="boja-accent" value="#E63946" style="width:40px;height:32px;padding:2px;border-radius:6px;cursor:pointer">
         </div>
         <input type="hidden" id="n-boje" value="">
@@ -305,121 +754,155 @@ hr.div{border:none;height:1px;background:linear-gradient(90deg,transparent,#333,
 
       <!-- FILE UPLOADS -->
       <div class="mb-4">
-        <label class="block text-sm text-gray-400 mb-2">Logo (ako imate)</label>
-        <div id="logo-dropzone" onclick="document.getElementById('logo-input').click()" style="border:2px dashed #333;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='#E63946'" onmouseout="this.style.borderColor='#333'">
-          <div id="logo-placeholder" style="color:#666;font-size:.9rem">&#128193; Kliknite ili povucite logo ovdje<br><span style="font-size:.75rem">PNG, JPG, SVG &mdash; max 10MB</span></div>
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Logo (ako imate)</label>
+        <div id="logo-dropzone" onclick="document.getElementById('logo-input').click()" style="border:2px dashed #2a2a2a;border-radius:14px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='#E63946';this.style.background='rgba(230,57,70,0.04)'" onmouseout="this.style.borderColor='#2a2a2a';this.style.background='transparent'">
+          <div id="logo-placeholder" style="color:#555;font-size:.9rem">&#128193; Kliknite ili povucite logo ovdje<br><span style="font-size:.75rem">PNG, JPG, SVG &mdash; max 10MB</span></div>
           <div id="logo-preview" style="display:none"></div>
         </div>
         <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
       </div>
 
       <div class="mb-6">
-        <label class="block text-sm text-gray-400 mb-2">Inspiracijske slike (do 3) &mdash; dizajni koji vam se svi&#273;aju</label>
-        <div id="slike-dropzone" onclick="document.getElementById('slike-input').click()" style="border:2px dashed #333;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='#E63946'" onmouseout="this.style.borderColor='#333'">
-          <div id="slike-placeholder" style="color:#666;font-size:.9rem">&#128444;&#65039; Kliknite za dodavanje slika<br><span style="font-size:.75rem">Do 3 slike, max 10MB svaka</span></div>
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Inspiracijske slike (do 3) &mdash; dizajni koji vam se svidaju</label>
+        <div id="slike-dropzone" onclick="document.getElementById('slike-input').click()" style="border:2px dashed #2a2a2a;border-radius:14px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='#E63946';this.style.background='rgba(230,57,70,0.04)'" onmouseout="this.style.borderColor='#2a2a2a';this.style.background='transparent'">
+          <div id="slike-placeholder" style="color:#555;font-size:.9rem">&#128444;&#65039; Kliknite za dodavanje slika<br><span style="font-size:.75rem">Do 3 slike, max 10MB svaka</span></div>
           <div id="slike-preview" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"></div>
         </div>
         <input type="file" id="slike-input" accept="image/*" multiple style="display:none" onchange="handleSlikeUpload(this)">
       </div>
 
       <div class="mb-6">
-        <label class="block text-sm text-gray-400 mb-2">Opi&#353;ite va&#353; biznis i &#353;to trebate na stranici *</label>
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Opisite vas biznis i sto trebate na stranici *</label>
         <textarea id="n-opis" rows="4" placeholder="Npr: Imam frizerski salon u Puli, trebam jednostavnu stranicu s galerijom radova, cjenikom i kontaktom..." required></textarea>
       </div>
 
       <input type="hidden" id="n-paket" value="">
-      <div id="n-paket-warning" style="display:none;background:rgba(230,57,70,.1);border:1px solid #E63946;border-radius:8px;padding:12px;margin-bottom:16px;font-size:.85rem;color:#E63946">
+      <div id="n-paket-warning" style="display:none;background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.4);border-radius:10px;padding:12px;margin-bottom:16px;font-size:.85rem;color:#E63946">
         &#9888;&#65039; Odaberite paket (Starter ili Business) gore.
       </div>
 
-      <button type="submit" id="n-btn" class="btn-p" style="width:100%;text-align:center">Po&#353;alji narud&#382;bu &rarr;</button>
+      <button type="submit" id="n-btn" class="btn-p" style="width:100%;text-align:center">Posalji narudzbu &rarr;</button>
 
-      <div id="n-ok" style="display:none;margin-top:16px;background:rgba(34,197,94,.1);border:1px solid #22c55e;border-radius:12px;padding:20px;text-align:center">
+      <div id="n-ok" style="display:none;margin-top:20px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:14px;padding:20px;text-align:center">
         <div style="font-size:1.5rem;margin-bottom:8px">&#9989;</div>
-        <div style="font-weight:700;color:#22c55e;margin-bottom:4px">Narud&#382;ba primljena!</div>
-        <div style="font-size:.85rem;color:#ccc">Kontaktirat &#263;emo vas u roku 24h s uputama za pla&#263;anje putem Revoluta i po&#269;etak izrade.</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:#22c55e;margin-bottom:4px">Narudzba primljena!</div>
+        <div style="font-size:.85rem;color:#9ca3af;line-height:1.5">Kontaktirat cemo vas u roku 24h s uputama za placanje putem Revoluta i pocetak izrade.</div>
       </div>
-      <div id="n-err" style="display:none;margin-top:12px;font-size:.85rem;color:#ef4444;text-align:center">Gre&#353;ka. Poku&#353;ajte ponovo ili pi&#353;ite na yolo.obrt@gmail.com</div>
+      <div id="n-err" style="display:none;margin-top:12px;font-size:.85rem;color:#ef4444;text-align:center">Greska. Pokusajte ponovo ili pisite na yolo.obrt@gmail.com</div>
     </form>
     </div>
   </div>
 </section>
 
-<hr class="div">
-
-<section id="automatizacije" class="py-20 px-6 smt">
+<!-- AUTOMATIZACIJE (light section) -->
+<section id="automatizacije" class="section-light py-24 px-6 smt">
   <div class="max-w-6xl mx-auto">
-    <div class="stag mb-4">Usluga 02</div>
-    <h2 class="text-4xl md:text-5xl font-black mb-4">AI savjetovanje &amp;<br><span class="grad-text">Custom automatizacije</span></h2>
-    <p class="text-gray-400 text-lg mb-12 max-w-2xl">Tvoj biznis ve&#263; ima procese koji se ponavljaju svaki dan. Uz pravi AI alat, te procese mo&#382;emo automatizirati i u&#353;tedjeti ti sate rada tjedno.</p>
-    <div class="grid md:grid-cols-3 gap-6 mb-12">
-      <div class="card p-6">
-        <div class="text-3xl mb-4">&#129302;</div>
-        <h3 class="text-lg font-bold mb-3">AI Savjetovanje</h3>
-        <p class="text-gray-400 text-sm">Analiza tvojih poslovnih procesa i preporuka gdje i kako primijeniti AI da do&#273;e&#353; do stvarnih u&#353;teda i ve&#263;ih prihoda.</p>
+    <div class="stag mb-3">Usluga 02</div>
+    <h2 style="font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.025em;line-height:1.1;margin-bottom:1rem;color:#0f172a">
+      AI savjetovanje &amp;<br>
+      <span class="grad-text">Custom automatizacije</span>
+    </h2>
+    <p style="color:#64748b;font-size:1.05rem;margin-bottom:3rem;max-width:560px;line-height:1.65">
+      Tvoj biznis vec ima procese koji se ponavljaju svaki dan. Uz pravi AI alat, te procese mozemo automatizirati i ustedjeti ti sate rada tjedno.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-5 mb-12">
+      <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:1.75rem;transition:box-shadow .3s,transform .2s" onmouseover="this.style.boxShadow='0 8px 40px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <div class="icon-box mb-4" style="background:rgba(230,57,70,0.08);border:1px solid rgba(230,57,70,0.2)"><span>&#129302;</span></div>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:.6rem">AI Savjetovanje</h3>
+        <p style="color:#64748b;font-size:.9rem;line-height:1.65">Analiza tvojih poslovnih procesa i preporuka gdje i kako primijeniti AI da dodjes do stvarnih usteda i vecih prihoda.</p>
       </div>
-      <div class="card p-6">
-        <div class="text-3xl mb-4">&#9881;&#65039;</div>
-        <h3 class="text-lg font-bold mb-3">Automatizacija procesa</h3>
-        <p class="text-gray-400 text-sm">Spajamo tvoje alate (e-mail, CRM, fakturiranje, narud&#382;be) u automatski tok. Bez ru&#269;nog rada, bez gre&#353;aka.</p>
+      <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:1.75rem;transition:box-shadow .3s,transform .2s" onmouseover="this.style.boxShadow='0 8px 40px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <div class="icon-box mb-4" style="background:rgba(230,57,70,0.08);border:1px solid rgba(230,57,70,0.2)"><span>&#9881;&#65039;</span></div>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:.6rem">Automatizacija procesa</h3>
+        <p style="color:#64748b;font-size:.9rem;line-height:1.65">Spajamo tvoje alate (e-mail, CRM, fakturiranje, narudzbe) u automatski tok. Bez rucnog rada, bez gresaka.</p>
       </div>
-      <div class="card p-6">
-        <div class="text-3xl mb-4">&#128200;</div>
-        <h3 class="text-lg font-bold mb-3">AI Agenti za biznis</h3>
-        <p class="text-gray-400 text-sm">Postavimo AI agenta koji odgovara na upite kupaca, &#353;alje ponude, prati leadove ili odr&#382;ava tvoj socialni medij.</p>
-      </div>
-    </div>
-    <div class="card p-2">
-      <div class="flex gap-6 items-start p-6 border-b border-gray-800">
-        <div class="w-12 h-12 rounded-xl grad-bg flex items-center justify-center font-black text-white text-xl flex-shrink-0">1</div>
-        <div><div class="font-bold mb-1">Besplatna analiza (30 min)</div><div class="text-gray-400 text-sm">Razgovor o tvojim trenutnim procesima. Zajedno identificiramo gdje AI mo&#382;e donijeti najve&#263;u vrijednost.</div></div>
-      </div>
-      <div class="flex gap-6 items-start p-6 border-b border-gray-800">
-        <div class="w-12 h-12 rounded-xl grad-bg flex items-center justify-center font-black text-white text-xl flex-shrink-0">2</div>
-        <div><div class="font-bold mb-1">Prijedlog i ponuda</div><div class="text-gray-400 text-sm">Dobiva&#353; konkretan plan: koje alate koristiti, kako ih spojiti i koliko &#263;e to u&#353;tedjeti.</div></div>
-      </div>
-      <div class="flex gap-6 items-start p-6">
-        <div class="w-12 h-12 rounded-xl grad-bg flex items-center justify-center font-black text-white text-xl flex-shrink-0">3</div>
-        <div><div class="font-bold mb-1">Implementacija i podr&#353;ka</div><div class="text-gray-400 text-sm">Postavljamo sve za tebe, educiramo tvoj tim i dostupni smo za pitanja.</div></div>
+      <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:1.75rem;transition:box-shadow .3s,transform .2s" onmouseover="this.style.boxShadow='0 8px 40px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <div class="icon-box mb-4" style="background:rgba(230,57,70,0.08);border:1px solid rgba(230,57,70,0.2)"><span>&#128200;</span></div>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:.6rem">AI Agenti za biznis</h3>
+        <p style="color:#64748b;font-size:.9rem;line-height:1.65">Postavimo AI agenta koji odgovara na upite kupaca, salje ponude, prati leadove ili odrzava tvoj socialni medij.</p>
       </div>
     </div>
-    <div class="mt-8 text-center"><a href="#kontakt" class="btn-p">Zatraži besplatnu analizu</a></div>
+
+    <!-- Process steps -->
+    <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:24px;overflow:hidden">
+      <div style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;border-bottom:1px solid #f1f5f9">
+        <div class="step-num">1</div>
+        <div style="padding-top:4px">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;margin-bottom:4px;color:#0f172a">Besplatna analiza (30 min)</div>
+          <div style="color:#64748b;font-size:.9rem;line-height:1.6">Razgovor o tvojim trenutnim procesima. Zajedno identificiramo gdje AI moze donijeti najvecu vrijednost.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;border-bottom:1px solid #f1f5f9">
+        <div class="step-num">2</div>
+        <div style="padding-top:4px">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;margin-bottom:4px;color:#0f172a">Prijedlog i ponuda</div>
+          <div style="color:#64748b;font-size:.9rem;line-height:1.6">Dobivas konkretan plan: koje alate koristiti, kako ih spojiti i koliko ce to ustedjeti.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px">
+        <div class="step-num">3</div>
+        <div style="padding-top:4px">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;margin-bottom:4px;color:#0f172a">Implementacija i podrska</div>
+          <div style="color:#64748b;font-size:.9rem;line-height:1.6">Postavljamo sve za tebe, educiramo tvoj tim i dostupni smo za pitanja.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 text-center">
+      <a href="#kontakt" class="btn-p">Zatrazi besplatnu analizu</a>
+    </div>
   </div>
 </section>
 
-<hr class="div">
-
-<section id="yolowaiter" class="py-20 px-6 smt">
+<!-- YOLOWAITER (dark) -->
+<section id="yolowaiter" class="section-deep py-24 px-6 smt">
   <div class="max-w-6xl mx-auto">
-    <div class="stag mb-4">Dolazi uskoro</div>
-    <div class="flex flex-col md:flex-row gap-12 items-center">
+    <div class="stag mb-3">Dolazi uskoro</div>
+    <div class="flex flex-col md:flex-row gap-14 items-center">
       <div class="md:w-1/2">
-        <div class="tag mb-4">Za restorane i kafi&#263;e</div>
-        <h2 class="text-4xl md:text-5xl font-black mb-6"><span class="grad-text">YOLOwaiter</span><br>AI konobar koji nikad ne spava</h2>
-        <p class="text-gray-400 text-lg mb-6">Gosti skeniraju QR kod, razgovaraju s AI konobarom, naru&#269;uju &mdash; a ti &#353;tedi&#353; na osoblju i gre&#353;kama. Sustav koji se ispla&#263;uje ve&#263; prvog tjedna.</p>
+        <div class="tag mb-5">Za restorane i kafice</div>
+        <h2 style="font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.025em;line-height:1.1;margin-bottom:1.25rem">
+          <span class="grad-text">YOLOwaiter</span><br>
+          AI konobar koji nikad ne spava
+        </h2>
+        <p style="color:#94a3b8;font-size:1.05rem;line-height:1.65;margin-bottom:1.25rem">
+          Gosti skeniraju QR kod, razgovaraju s AI konobarom, narucuju &mdash; a ti stedis na osoblju i greskama. Sustav koji se isplati vec prvog tjedna.
+        </p>
         <div class="space-y-2 mb-6">
           <div class="chk"><span class="chki">&#10003;</span> QR kod na stolu &rarr; AI konobar odmah spreman</div>
-          <div class="chk"><span class="chki">&#10003;</span> Vi&#353;ejezi&#269;ni &mdash; gosti naru&#269;uju na svom jeziku</div>
+          <div class="chk"><span class="chki">&#10003;</span> Visejezicni &mdash; gosti narucuju na svom jeziku</div>
           <div class="chk"><span class="chki">&#10003;</span> Preporuke i upsell automatski</div>
-          <div class="chk"><span class="chki">&#10003;</span> Narud&#382;be idu direktno u kuhinju</div>
-          <div class="chk"><span class="chki">&#10003;</span> Manje gre&#353;aka, ve&#263;e naru&#269;ivanje</div>
+          <div class="chk"><span class="chki">&#10003;</span> Narudzbe idu direktno u kuhinju</div>
+          <div class="chk"><span class="chki">&#10003;</span> Manje gresaka, vece narucivanje</div>
         </div>
-        <p class="text-sm text-gray-500 mb-4">Biti &#263;e dostupno uskoro. Prijavi se i budi me&#273; prvima u Istri.</p>
+        <p style="font-size:.88rem;color:#6b7280;margin-bottom:1.25rem">Bit ce dostupno uskoro. Prijavi se i budi medju prvima u Istri.</p>
         <form id="form-waiter" class="flex flex-col sm:flex-row gap-3">
           <input type="email" id="waiter-email" placeholder="tvoj@email.com" style="flex:1" required>
-          <button type="submit" class="btn-p" style="white-space:nowrap;padding:14px 24px">Na listu &#269;ekanja</button>
+          <button type="submit" class="btn-p" style="white-space:nowrap;padding:14px 24px">Na listu cekanja</button>
         </form>
-        <div id="waiter-ok" style="display:none;margin-top:8px;font-size:.85rem;color:#22c55e">&#10003; Uspje&#353;no! Javit &#263;emo ti se uskoro.</div>
+        <div id="waiter-ok" style="display:none;margin-top:10px;font-size:.85rem;color:#22c55e;font-weight:600">&#10003; Uspjesno! Javit cemo ti se uskoro.</div>
       </div>
+
+      <!-- Mockup -->
       <div class="md:w-1/2">
-        <div class="card p-8 text-center">
-          <div class="w-24 h-24 mx-auto mb-6 rounded-2xl grad-bg flex items-center justify-center text-5xl">&#128241;</div>
-          <div class="text-xl font-bold mb-2">Skeniraj i naru&#269;i</div>
-          <div class="text-gray-400 text-sm mb-6">Gost skenira QR, odabire jela i pi&#263;a, pla&#263;a &mdash; sve bez &#269;ekanja konobara.</div>
+        <div class="card p-8 text-center" style="background:linear-gradient(135deg,rgba(20,20,20,0.95) 0%,rgba(26,26,26,0.9) 100%)">
+          <div style="width:80px;height:80px;margin:0 auto 1.5rem;border-radius:20px;background:linear-gradient(135deg,#E63946,#C1121F);display:flex;align-items:center;justify-content:center;font-size:2.5rem;box-shadow:0 8px 32px rgba(230,57,70,0.35)">&#128241;</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:.5rem">Skeniraj i naruci</div>
+          <div style="color:#6b7280;font-size:.88rem;margin-bottom:1.75rem;line-height:1.5">Gost skenira QR, odabire jela i pica, placa &mdash; sve bez cekanja konobara.</div>
           <div class="grid grid-cols-3 gap-3">
-            <div class="bg-gray-800 rounded-lg p-3 text-xs text-gray-400"><div class="text-lg mb-1">&#127829;</div>Pizza<br><span class="text-white font-bold">9.50&#8364;</span></div>
-            <div class="bg-gray-800 rounded-lg p-3 text-xs text-gray-400"><div class="text-lg mb-1">&#127864;</div>Pivo<br><span class="text-white font-bold">4.50&#8364;</span></div>
-            <div class="bg-gray-800 rounded-lg p-3 text-xs text-gray-400"><div class="text-lg mb-1">&#9749;</div>Kava<br><span class="text-white font-bold">1.80&#8364;</span></div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px;font-size:.8rem;color:#9ca3af">
+              <div style="font-size:1.5rem;margin-bottom:6px">&#127829;</div>
+              Pizza<br><span style="color:#fff;font-weight:700;font-size:.95rem">9.50&#8364;</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px;font-size:.8rem;color:#9ca3af">
+              <div style="font-size:1.5rem;margin-bottom:6px">&#127864;</div>
+              Pivo<br><span style="color:#fff;font-weight:700;font-size:.95rem">4.50&#8364;</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px;font-size:.8rem;color:#9ca3af">
+              <div style="font-size:1.5rem;margin-bottom:6px">&#9749;</div>
+              Kava<br><span style="color:#fff;font-weight:700;font-size:.95rem">1.80&#8364;</span>
+            </div>
           </div>
         </div>
       </div>
@@ -427,52 +910,70 @@ hr.div{border:none;height:1px;background:linear-gradient(90deg,transparent,#333,
   </div>
 </section>
 
-<hr class="div">
-
-<section id="yoloapointr" class="py-20 px-6 smt">
+<!-- YOLOAPOINTR (light) -->
+<section id="yoloapointr" class="section-light py-24 px-6 smt">
   <div class="max-w-6xl mx-auto">
-    <div class="stag mb-4">Dolazi uskoro</div>
-    <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
+    <div class="stag mb-3">Dolazi uskoro</div>
+    <div class="flex flex-col md:flex-row-reverse gap-14 items-center">
       <div class="md:w-1/2">
-        <div class="tag mb-4">Za zdravstvene i beauty usluge</div>
-        <h2 class="text-4xl md:text-5xl font-black mb-6"><span class="grad-text">YOLOapointr</span><br>Booking bez telefona</h2>
-        <p class="text-gray-400 text-lg mb-6">Tvoji klijenti rezerviraju termin online, 24/7 &mdash; bez poziva, bez SMS-a. Idealno za zubare, frizere, kozmetiku, fizioterapeute.</p>
+        <div class="tag mb-5">Za zdravstvene i beauty usluge</div>
+        <h2 style="font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.025em;line-height:1.1;margin-bottom:1.25rem;color:#0f172a">
+          <span class="grad-text">YOLOapointr</span><br>
+          Booking bez telefona
+        </h2>
+        <p style="color:#64748b;font-size:1.05rem;line-height:1.65;margin-bottom:1.25rem">
+          Tvoji klijenti rezerviraju termin online, 24/7 &mdash; bez poziva, bez SMS-a. Idealno za zubare, frizere, kozmetiku, fizioterapeute.
+        </p>
         <div class="space-y-2 mb-6">
-          <div class="chk"><span class="chki">&#10003;</span> Online booking 24/7 s tvoje web stranice</div>
-          <div class="chk"><span class="chki">&#10003;</span> Automatski podsjetnici SMS i email</div>
-          <div class="chk"><span class="chki">&#10003;</span> Upravljanje rasporedima i slobodnim terminima</div>
-          <div class="chk"><span class="chki">&#10003;</span> Vi&#353;e osoblja &mdash; svaki ima svoj kalendar</div>
-          <div class="chk"><span class="chki">&#10003;</span> Analitika: tko naru&#269;uje, koliko, kada</div>
+          <div class="chk" style="color:#475569"><span class="chki">&#10003;</span> Online booking 24/7 s tvoje web stranice</div>
+          <div class="chk" style="color:#475569"><span class="chki">&#10003;</span> Automatski podsjetnici SMS i email</div>
+          <div class="chk" style="color:#475569"><span class="chki">&#10003;</span> Upravljanje rasporedima i slobodnim terminima</div>
+          <div class="chk" style="color:#475569"><span class="chki">&#10003;</span> Vise osoblja &mdash; svaki ima svoj kalendar</div>
+          <div class="chk" style="color:#475569"><span class="chki">&#10003;</span> Analitika: tko narucuje, koliko, kada</div>
         </div>
-        <p class="text-sm text-gray-500 mb-4">Trenutno u razvoju. Prijavi se i dobij early bird popust.</p>
+        <p style="font-size:.88rem;color:#9ca3af;margin-bottom:1.25rem">Trenutno u razvoju. Prijavi se i dobij early bird popust.</p>
         <form id="form-apointr" class="flex flex-col sm:flex-row gap-3">
-          <input type="email" id="apointr-email" placeholder="tvoj@email.com" style="flex:1" required>
+          <input type="email" id="apointr-email" placeholder="tvoj@email.com" style="flex:1;background:#fff;border:1.5px solid #e2e8f0;color:#0f172a" required>
           <button type="submit" class="btn-p" style="white-space:nowrap;padding:14px 24px">Early bird lista</button>
         </form>
-        <div id="apointr-ok" style="display:none;margin-top:8px;font-size:.85rem;color:#22c55e">&#10003; Uspje&#353;no! Javit &#263;emo ti se uskoro.</div>
+        <div id="apointr-ok" style="display:none;margin-top:10px;font-size:.85rem;color:#16a34a;font-weight:600">&#10003; Uspjesno! Javit cemo ti se uskoro.</div>
       </div>
+
+      <!-- Booking mockup -->
       <div class="md:w-1/2">
-        <div class="card p-8">
-          <div class="text-sm text-gray-500 mb-4">Petak, 7. oujka &mdash; raspored</div>
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:24px;padding:2rem;box-shadow:0 8px 40px rgba(0,0,0,.06)">
+          <div style="font-size:.82rem;color:#94a3b8;margin-bottom:1.25rem;font-weight:600">Petak, 7. ozujka &mdash; raspored</div>
           <div class="space-y-3">
-            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
-              <div class="w-1 h-12 grad-bg rounded-full"></div>
-              <div><div class="text-sm font-bold">Marko P. &mdash; Pregled</div><div class="text-xs text-gray-500">09:00 &mdash; 09:30</div></div>
-              <span class="ml-auto tag text-xs">Potvrdeno</span>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fef2f2;border:1px solid rgba(230,57,70,0.15);border-radius:14px">
+              <div style="width:4px;height:48px;background:linear-gradient(180deg,#E63946,#C1121F);border-radius:4px;flex-shrink:0"></div>
+              <div>
+                <div style="font-size:.9rem;font-weight:700;color:#0f172a">Marko P. &mdash; Pregled</div>
+                <div style="font-size:.78rem;color:#94a3b8">09:00 &mdash; 09:30</div>
+              </div>
+              <span class="tag ml-auto" style="font-size:.72rem">Potvrdeno</span>
             </div>
-            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
-              <div class="w-1 h-12 grad-bg rounded-full"></div>
-              <div><div class="text-sm font-bold">Ana K. &mdash; &#268;i&#353;&#263;enje</div><div class="text-xs text-gray-500">10:00 &mdash; 11:00</div></div>
-              <span class="ml-auto tag text-xs">Potvrdeno</span>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fef2f2;border:1px solid rgba(230,57,70,0.15);border-radius:14px">
+              <div style="width:4px;height:48px;background:linear-gradient(180deg,#E63946,#C1121F);border-radius:4px;flex-shrink:0"></div>
+              <div>
+                <div style="font-size:.9rem;font-weight:700;color:#0f172a">Ana K. &mdash; Ciscenje</div>
+                <div style="font-size:.78rem;color:#94a3b8">10:00 &mdash; 11:00</div>
+              </div>
+              <span class="tag ml-auto" style="font-size:.72rem">Potvrdeno</span>
             </div>
-            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg opacity-40">
-              <div class="w-1 h-12 bg-gray-600 rounded-full"></div>
-              <div><div class="text-sm text-gray-400 font-bold">11:30 &mdash; Slobodan termin</div><div class="text-xs text-gray-500">Online booking aktivan</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:14px;opacity:.6">
+              <div style="width:4px;height:48px;background:#cbd5e1;border-radius:4px;flex-shrink:0"></div>
+              <div>
+                <div style="font-size:.9rem;font-weight:600;color:#94a3b8">11:30 &mdash; Slobodan termin</div>
+                <div style="font-size:.78rem;color:#cbd5e1">Online booking aktivan</div>
+              </div>
             </div>
-            <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
-              <div class="w-1 h-12 grad-bg rounded-full"></div>
-              <div><div class="text-sm font-bold">Ivan S. &mdash; Konzultacija</div><div class="text-xs text-gray-500">14:00 &mdash; 14:30</div></div>
-              <span class="ml-auto tag text-xs">Potvrdeno</span>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fef2f2;border:1px solid rgba(230,57,70,0.15);border-radius:14px">
+              <div style="width:4px;height:48px;background:linear-gradient(180deg,#E63946,#C1121F);border-radius:4px;flex-shrink:0"></div>
+              <div>
+                <div style="font-size:.9rem;font-weight:700;color:#0f172a">Ivan S. &mdash; Konzultacija</div>
+                <div style="font-size:.78rem;color:#94a3b8">14:00 &mdash; 14:30</div>
+              </div>
+              <span class="tag ml-auto" style="font-size:.72rem">Potvrdeno</span>
             </div>
           </div>
         </div>
@@ -481,43 +982,103 @@ hr.div{border:none;height:1px;background:linear-gradient(90deg,transparent,#333,
   </div>
 </section>
 
-<hr class="div">
+<!-- CTA SECTION -->
+<section class="cta-section py-24 px-6">
+  <div class="cta-glow"></div>
+  <div class="max-w-3xl mx-auto text-center relative z-10">
+    <div class="stag mb-4">Spreman za sljedeci korak?</div>
+    <h2 style="font-size:clamp(2.2rem,6vw,3.5rem);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin-bottom:1.25rem">
+      Tvoj biznis zasluzuje<br>
+      <span class="grad-text">bolji digitalni prisup.</span>
+    </h2>
+    <p style="color:#94a3b8;font-size:1.1rem;margin-bottom:2.5rem;line-height:1.65;max-width:500px;margin-left:auto;margin-right:auto">
+      Lokalni poduzentici diljem Istre vec koriste AI prednost. Ne ostaj iza.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="#kontakt" class="btn-p" style="padding:16px 40px;font-size:1.05rem">Kontaktiraj nas danas</a>
+      <a href="tel:+385955746085" class="btn-o" style="padding:16px 36px;font-size:1.05rem">&#128222; Nazovi direktno</a>
+    </div>
+  </div>
+</section>
 
-<section id="kontakt" class="py-20 px-6 smt">
+<!-- KONTAKT (dark) -->
+<section id="kontakt" class="section-dark py-24 px-6 smt">
   <div class="max-w-2xl mx-auto text-center">
-    <div class="stag mb-4">Kontakt</div>
-    <h2 class="text-4xl md:text-5xl font-black mb-4">Ozbiljno razmi&#353;lja&#353;?<br><span class="grad-text">Javi se.</span></h2>
-    <p class="text-gray-400 mb-10">Bez obaveza. Razgovaramo o tome &#353;to treba&#353; i vidimo ima li smisla suradnja.</p>
+    <div class="stag mb-3">Kontakt</div>
+    <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-.025em;line-height:1.1;margin-bottom:.75rem">
+      Ozbiljno razmisljas?<br><span class="grad-text">Javi se.</span>
+    </h2>
+    <p style="color:#9ca3af;margin-bottom:2.5rem;line-height:1.6">Bez obaveza. Razgovaramo o tome sto trebas i vidimo ima li smisla suradnja.</p>
     <form id="form-kontakt" class="card p-8 text-left">
       <div class="grid md:grid-cols-2 gap-4 mb-4">
-        <div><label class="block text-sm text-gray-400 mb-2">Ime i prezime *</label><input type="text" id="k-ime" placeholder="Ante Anti&#263;" required></div>
-        <div><label class="block text-sm text-gray-400 mb-2">Email *</label><input type="email" id="k-email" placeholder="ante@firma.hr" required></div>
+        <div>
+          <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Ime i prezime *</label>
+          <input type="text" id="k-ime" placeholder="Ante Antic" required>
+        </div>
+        <div>
+          <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Email *</label>
+          <input type="email" id="k-email" placeholder="ante@firma.hr" required>
+        </div>
       </div>
-      <div class="mb-4"><label class="block text-sm text-gray-400 mb-2">Telefon</label><input type="tel" id="k-telefon" placeholder="+385 91 ..."></div>
       <div class="mb-4">
-        <label class="block text-sm text-gray-400 mb-2">Koja te usluga zanima?</label>
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Telefon</label>
+        <input type="tel" id="k-telefon" placeholder="+385 91 ...">
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Koja te usluga zanima?</label>
         <select id="k-usluga">
           <option value="">Odaberi...</option>
           <option value="web">AI izrada web stranice</option>
           <option value="automatizacije">AI savjetovanje / Automatizacije</option>
           <option value="yolowaiter">YOLOwaiter</option>
           <option value="yoloapointr">YOLOapointr</option>
-          <option value="ostalo">Ne&#353;to drugo</option>
+          <option value="ostalo">Nesto drugo</option>
         </select>
       </div>
-      <div class="mb-6"><label class="block text-sm text-gray-400 mb-2">Poruka</label><textarea id="k-poruka" rows="4" placeholder="Ukratko opi&#353;i svoj biznis i &#353;to te zanima..."></textarea></div>
-      <button type="submit" id="k-btn" class="btn-p w-full text-center" style="width:100%">Po&#353;alji upit &rarr;</button>
-      <div id="k-ok" style="display:none;margin-top:12px;font-size:.85rem;color:#22c55e;text-align:center">&#10003; Hvala! Javit &#263;emo se u roku 24 sata.</div>
-      <div id="k-err" style="display:none;margin-top:12px;font-size:.85rem;color:#ef4444;text-align:center">Ne&#353;to je po&#353;lo krivo. Poku&#353;aj opet ili pi&#353;i na yolo.obrt@gmail.com</div>
+      <div class="mb-6">
+        <label class="block text-sm mb-2" style="color:#9ca3af;font-weight:500">Poruka</label>
+        <textarea id="k-poruka" rows="4" placeholder="Ukratko opisi svoj biznis i sto te zanima..."></textarea>
+      </div>
+      <button type="submit" id="k-btn" class="btn-p" style="width:100%;text-align:center">Posalji upit &rarr;</button>
+      <div id="k-ok" style="display:none;margin-top:14px;font-size:.85rem;color:#22c55e;text-align:center;font-weight:600">&#10003; Hvala! Javit cemo se u roku 24 sata.</div>
+      <div id="k-err" style="display:none;margin-top:14px;font-size:.85rem;color:#ef4444;text-align:center">Nesto je poslo krivo. Pokusaj opet ili pisi na yolo.obrt@gmail.com</div>
     </form>
   </div>
 </section>
 
-<footer style="border-top:1px solid #111;padding:40px 24px">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-    <div class="font-black text-xl"><span class="grad-text">YOLO</span><span class="text-white"> usluge</span></div>
-    <div class="text-gray-600 text-sm">YOLO obrt &mdash; Pula, Hrvatska</div>
-    <div class="text-gray-600 text-sm"><a href="mailto:yolo.obrt@gmail.com" style="color:#666;text-decoration:none" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">yolo.obrt@gmail.com</a></div>
+<!-- FOOTER -->
+<footer style="background:#0a0a0a;border-top:1px solid #111;padding:48px 24px">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10">
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:-.02em;margin-bottom:.4rem">
+          <span class="grad-text">YOLO</span><span style="color:#fff"> usluge</span>
+        </div>
+        <div style="color:#4b5563;font-size:.88rem;line-height:1.5">AI agencija iz Pule.<br>Digitalni alati za lokalni biznis.</div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-8 text-sm">
+        <div>
+          <div style="color:#374151;font-weight:700;margin-bottom:.75rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;font-family:'Plus Jakarta Sans',sans-serif">Usluge</div>
+          <div class="flex flex-col gap-2">
+            <a href="#web" style="color:#6b7280;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#e5e7eb'" onmouseout="this.style.color='#6b7280'">AI Web stranice</a>
+            <a href="#automatizacije" style="color:#6b7280;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#e5e7eb'" onmouseout="this.style.color='#6b7280'">Automatizacije</a>
+            <a href="#yolowaiter" style="color:#6b7280;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#e5e7eb'" onmouseout="this.style.color='#6b7280'">YOLOwaiter</a>
+            <a href="#yoloapointr" style="color:#6b7280;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#e5e7eb'" onmouseout="this.style.color='#6b7280'">YOLOapointr</a>
+          </div>
+        </div>
+        <div>
+          <div style="color:#374151;font-weight:700;margin-bottom:.75rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;font-family:'Plus Jakarta Sans',sans-serif">Kontakt</div>
+          <div class="flex flex-col gap-2">
+            <a href="mailto:yolo.obrt@gmail.com" style="color:#6b7280;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#e5e7eb'" onmouseout="this.style.color='#6b7280'">yolo.obrt@gmail.com</a>
+            <a href="tel:+385955746085" style="color:#6b7280;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#e5e7eb'" onmouseout="this.style.color='#6b7280'">+385 95 574 6085</a>
+            <span style="color:#6b7280">Pula, Istra, HR</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #111;padding-top:24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+      <div style="color:#374151;font-size:.8rem">&copy; 2026 YOLO obrt &mdash; Pula, Hrvatska. Sva prava pridrzana.</div>
+    </div>
   </div>
 </footer>
 
@@ -540,7 +1101,7 @@ function updateNavAuth() {
   if (!navAuth) return;
   if (currentUser) {
     const ime = currentUser.user_metadata?.ime || currentUser.email.split('@')[0];
-    navAuth.innerHTML = '<span style="color:#888;font-size:.85rem">\uD83D\uDC64 ' + ime + '</span> <button onclick="sb.auth.signOut()" class="btn-o" style="padding:8px 16px;font-size:.8rem">Odjava</button>';
+    navAuth.innerHTML = '<span style="color:#888;font-size:.85rem">\uD83D\uDC64 ' + ime + '</span> <button onclick="sb.auth.signOut()" class="btn-ghost" style="padding:8px 16px;font-size:.8rem">Odjava</button>';
   } else {
     navAuth.innerHTML = '<button onclick="openAuthModal()" class="btn-p" style="padding:10px 20px;font-size:.85rem">Prijava / Registracija</button>';
   }
@@ -556,8 +1117,8 @@ function closeAuthModal() {
 function switchTab(tab) {
   document.getElementById('form-reg').style.display = tab==='reg' ? 'flex' : 'none';
   document.getElementById('form-login').style.display = tab==='login' ? 'flex' : 'none';
-  document.getElementById('tab-reg').style.color = tab==='reg' ? '#fff' : '#666';
-  document.getElementById('tab-login').style.color = tab==='login' ? '#fff' : '#666';
+  document.getElementById('tab-reg').style.color = tab==='reg' ? '#fff' : '#555';
+  document.getElementById('tab-login').style.color = tab==='login' ? '#fff' : '#555';
   document.getElementById('tab-reg').style.borderBottomColor = tab==='reg' ? '#E63946' : 'transparent';
   document.getElementById('tab-login').style.borderBottomColor = tab==='login' ? '#E63946' : 'transparent';
 }
@@ -577,15 +1138,14 @@ async function doRegister() {
   });
   if (error) {
     errDiv.style.color='#ef4444';
-    errDiv.textContent = error.message.includes('already registered') ? 'Email već postoji. Pokušajte se prijaviti.' : error.message;
+    errDiv.textContent = error.message.includes('already registered') ? 'Email vec postoji. Pokusajte se prijaviti.' : error.message;
     errDiv.style.display='block';
   } else if (data.session) {
-    toast('Dobrodošli! 🎉', true);
+    toast('Dobrodosli!', true);
     closeAuthModal();
   } else {
-    // Email confirmation required
     errDiv.style.color='#22c55e';
-    errDiv.textContent='✓ Račun kreiran! Provjerite email sandučić za potvrdu, zatim se prijavite.';
+    errDiv.textContent='\u2713 Racun kreiran! Provjerite email sanducic za potvrdu, zatim se prijavite.';
     errDiv.style.display='block';
   }
 }
@@ -598,7 +1158,7 @@ async function doLogin() {
   const {error} = await sb.auth.signInWithPassword({email, password: pass});
   if (error) {
     if (error.message.includes('Email not confirmed')) {
-      errDiv.textContent='Email nije potvrđen. Provjerite sandučić i kliknite link za potvrdu.';
+      errDiv.textContent='Email nije potvrdjen. Provjerite sanducic i kliknite link za potvrdu.';
     } else if (error.message.includes('Invalid login')) {
       errDiv.textContent='Krivi email ili lozinka.';
     } else {
@@ -678,7 +1238,7 @@ function selectPkg(pkg) {
 let selectedBoje = [];
 
 function selectPalette(el) {
-  document.querySelectorAll('.palette-opt').forEach(o => o.style.borderColor='#333');
+  document.querySelectorAll('.palette-opt').forEach(o => o.style.borderColor='#2a2a2a');
   el.style.borderColor = '#E63946';
   const boje = JSON.parse(el.dataset.boje);
   const customDiv = document.getElementById('custom-colors');
@@ -739,7 +1299,7 @@ function handleSlikeUpload(input) {
     reader.onload = (e) => {
       const img = document.createElement('img');
       img.src = e.target.result;
-      img.style.cssText = 'width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #333';
+      img.style.cssText = 'width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid #333';
       prev.appendChild(img);
     };
     reader.readAsDataURL(file);
@@ -816,7 +1376,7 @@ document.getElementById('form-narudi')?.addEventListener('submit', async functio
     document.getElementById('n-ok').style.display = 'block';
     this.reset();
     logoFile = null; slikeFiles = []; selectedBoje = []; selectedPkg = '';
-    document.querySelectorAll('.palette-opt').forEach(o => o.style.borderColor='#333');
+    document.querySelectorAll('.palette-opt').forEach(o => o.style.borderColor='#2a2a2a');
     document.querySelectorAll('.pkg-option').forEach(el => { el.style.borderColor='#222'; el.classList.remove('selected'); const c=el.querySelector('.pkg-check'); if(c)c.innerHTML=''; });
     document.getElementById('logo-placeholder').style.display = 'block';
     document.getElementById('logo-preview').style.display = 'none';

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" width="320" height="100">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&amp;display=swap');
+    </style>
+  </defs>
+  <!-- Dark background -->
+  <rect width="320" height="100" fill="#0a0a0a" rx="8"/>
+  <!-- YOLO text -->
+  <text x="20" y="68" font-family="'Space Grotesk', 'Arial Black', sans-serif" font-weight="800" font-size="58" fill="#ffffff" letter-spacing="-2">YOLO</text>
+  <!-- Red dot -->
+  <circle cx="238" cy="55" r="7" fill="#E63946"/>
+  <!-- usluge tagline -->
+  <text x="21" y="88" font-family="'Space Grotesk', Arial, sans-serif" font-weight="400" font-size="14" fill="#666666" letter-spacing="4">USLUGE</text>
+</svg>

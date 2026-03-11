@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 100" width="340" height="100">
+  <!-- Dark background -->
+  <rect width="340" height="100" fill="#0a0a0a" rx="8"/>
+
+  <!-- Icon: rounded square with gradient -->
+  <defs>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E63946"/>
+      <stop offset="100%" style="stop-color:#C1121F"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="18" width="64" height="64" rx="14" fill="url(#iconGrad)"/>
+
+  <!-- Y letter in icon -->
+  <text x="31" y="68" font-family="'Arial Black', sans-serif" font-weight="900" font-size="46" fill="#ffffff">Y</text>
+
+  <!-- YOLO text -->
+  <text x="98" y="55" font-family="'Arial Black', sans-serif" font-weight="900" font-size="36" fill="#ffffff" letter-spacing="-1">YOLO</text>
+
+  <!-- usluge -->
+  <text x="100" y="76" font-family="Arial, sans-serif" font-weight="400" font-size="13" fill="#888888" letter-spacing="3.5">usluge</text>
+
+  <!-- Subtle divider -->
+  <line x1="98" y1="59" x2="248" y2="59" stroke="#222" stroke-width="1"/>
+</svg>

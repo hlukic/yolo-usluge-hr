@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 100" width="280" height="100">
+  <!-- Dark background -->
+  <rect width="280" height="100" fill="#0a0a0a" rx="8"/>
+
+  <!-- Minimal: just YOLO with red underline accent -->
+  <text x="20" y="62" font-family="'Arial Black', sans-serif" font-weight="900" font-size="48" fill="#ffffff" letter-spacing="-1.5">YOLO</text>
+
+  <!-- Red accent underline — partial, stylish -->
+  <rect x="20" y="70" width="120" height="3" rx="2" fill="#E63946"/>
+  <rect x="148" y="70" width="24" height="3" rx="2" fill="rgba(230,57,70,0.3)"/>
+
+  <!-- usluge small -->
+  <text x="155" y="63" font-family="Arial, sans-serif" font-weight="400" font-size="16" fill="#E63946" letter-spacing="1">usluge</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100" width="300" height="100">
+  <defs>
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E63946"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+  <!-- Dark background -->
+  <rect width="300" height="100" fill="#0a0a0a" rx="8"/>
+
+  <!-- Lightning bolt / stylized Y shape -->
+  <!-- Top-left arm -->
+  <polygon points="28,18 52,18 44,48 56,48 30,82 36,54 24,54" fill="url(#boltGrad)"/>
+
+  <!-- YOLO usluge text -->
+  <text x="78" y="52" font-family="'Arial Black', sans-serif" font-weight="900" font-size="32" fill="#ffffff" letter-spacing="-0.5">YOLO</text>
+  <text x="79" y="73" font-family="Arial, sans-serif" font-weight="300" font-size="13" fill="#666666" letter-spacing="5">USLUGE</text>
+
+  <!-- AI badge -->
+  <rect x="205" y="18" width="28" height="16" rx="4" fill="rgba(230,57,70,0.2)" stroke="#E63946" stroke-width="1"/>
+  <text x="219" y="30" font-family="Arial, sans-serif" font-weight="700" font-size="9" fill="#E63946" text-anchor="middle" letter-spacing="0.5">AI</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 80" width="380" height="80">
+  <!-- Druga varijanta: YOLO malo veće, usluge manje/svjetlije -->
+  <rect width="380" height="80" fill="#0a0a0a" rx="10"/>
+  <text x="20" y="58" font-family="'Arial Black', sans-serif" font-weight="900" font-size="48" fill="#ffffff" letter-spacing="-2">YOLO</text>
+  <circle cx="196" cy="42" r="5" fill="#E63946"/>
+  <text x="212" y="57" font-family="'Arial Black', sans-serif" font-weight="900" font-size="44" fill="rgba(255,255,255,0.75)" letter-spacing="-2">usluge</text>
+</svg>

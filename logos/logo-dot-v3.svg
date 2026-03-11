@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 80" width="380" height="80">
+  <!-- Treća varijanta: malo spacing oko točke, glow efekt -->
+  <defs>
+    <filter id="dotglow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="380" height="80" fill="#0a0a0a" rx="10"/>
+  <text x="20" y="58" font-family="'Arial Black', sans-serif" font-weight="900" font-size="48" fill="#ffffff" letter-spacing="-2">YOLO</text>
+  <!-- Glow halo -->
+  <circle cx="200" cy="42" r="9" fill="rgba(230,57,70,0.2)"/>
+  <!-- Dot -->
+  <circle cx="200" cy="42" r="5" fill="#E63946" filter="url(#dotglow)"/>
+  <text x="218" y="58" font-family="'Arial Black', sans-serif" font-weight="900" font-size="48" fill="#ffffff" letter-spacing="-2">usluge</text>
+</svg>
